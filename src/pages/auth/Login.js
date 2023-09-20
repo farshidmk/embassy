@@ -15,39 +15,39 @@ import {
 } from "../../components/Component";
 import { Form, Spinner, Alert } from "reactstrap";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { useAuth } from "../../hooks/useAuth";
 
 const Login = () => {
-  const [loading, setLoading] = useState(false);
+  const Auth = useAuth();
+  const navigate = useNavigate();
+  const { isLoading, mutate, error } = useMutation({
+    mutationFn: loginRequest,
+    onSuccess: (res) => {
+      console.log({ res });
+      Auth.storeToken("123123");
+      Auth.setUserInfo({ name: "admin", res });
+      navigate("/");
+    },
+  });
+
   const [passState, setPassState] = useState(false);
-  const [errorVal, setError] = useState("");
 
   const onFormSubmit = (formData) => {
-    setLoading(true);
-    const loginName = "info@softnio.com";
-    const pass = "123456";
-    if (formData.name === loginName && formData.passcode === pass) {
-      localStorage.setItem("accessToken", "token");
-      setTimeout(() => {
-        window.history.pushState(
-          `${process.env.PUBLIC_URL ? process.env.PUBLIC_URL : "/"}`,
-          "auth-login",
-          `${process.env.PUBLIC_URL ? process.env.PUBLIC_URL : "/"}`
-        );
-        window.location.reload();
-      }, 1000);
-    } else {
-      setTimeout(() => {
-        setError("Cannot login with credentials");
-        setLoading(false);
-      }, 1000);
-    }
+    mutate(formData);
   };
 
-  const {  register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-  return <>
-    <Head title="Login" />
+  return (
+    <>
+      <Head title="Login" />
       <Block className="nk-block-middle nk-auth-body  wide-xs">
         <div className="brand-logo pb-4 text-center">
           <Link to={process.env.PUBLIC_URL + "/"} className="logo-link">
@@ -61,14 +61,14 @@ const Login = () => {
             <BlockContent>
               <BlockTitle tag="h4">Sign-In</BlockTitle>
               <BlockDes>
-                <p>Access Dashlite using your email and passcode.</p>
+                <p>Access panel using your email and password.</p>
               </BlockDes>
             </BlockContent>
           </BlockHead>
-          {errorVal && (
+          {error && (
             <div className="mb-3">
               <Alert color="danger" className="alert-icon">
-                <Icon name="alert-circle" /> Unable to login with credentials{" "}
+                <Icon name="alert-circle" /> {error.message}
               </Alert>
             </div>
           )}
@@ -76,55 +76,57 @@ const Login = () => {
             <div className="form-group">
               <div className="form-label-group">
                 <label className="form-label" htmlFor="default-01">
-                  Email or Username
+                  Username
                 </label>
               </div>
               <div className="form-control-wrap">
                 <input
                   type="text"
                   id="default-01"
-                  {...register('name', { required: "This field is required" })}
-                  defaultValue="info@softnio.com"
-                  placeholder="Enter your email address or username"
-                  className="form-control-lg form-control" />
+                  {...register("username", { required: "This field is required" })}
+                  placeholder="Enter your username"
+                  className="form-control-lg form-control"
+                />
                 {errors.name && <span className="invalid">{errors.name.message}</span>}
               </div>
             </div>
             <div className="form-group">
               <div className="form-label-group">
                 <label className="form-label" htmlFor="password">
-                  Passcode
+                  password
                 </label>
-                <Link className="link link-primary link-sm" to={`${process.env.PUBLIC_URL}/auth-reset`}>
+                {/* <Link className="link link-primary link-sm" to={`${process.env.PUBLIC_URL}/auth-reset`}>
                   Forgot Code?
-                </Link>
+                </Link> */}
               </div>
               <div className="form-control-wrap">
-                <a
-                  href="#password"
+                <span
                   onClick={(ev) => {
                     ev.preventDefault();
                     setPassState(!passState);
                   }}
-                  className={`form-icon lg form-icon-right passcode-switch ${passState ? "is-hidden" : "is-shown"}`}
+                  style={{ cursor: "pointer" }}
+                  className={`form-icon lg form-icon-right password-switch `}
                 >
-                  <Icon name="eye" className="passcode-icon icon-show"></Icon>
-
-                  <Icon name="eye-off" className="passcode-icon icon-hide"></Icon>
-                </a>
+                  {passState ? (
+                    <Icon name="eye" className="password-icon icon-show"></Icon>
+                  ) : (
+                    <Icon name="eye-off" className="password-icon icon-hide"></Icon>
+                  )}
+                </span>
                 <input
                   type={passState ? "text" : "password"}
                   id="password"
-                  {...register('passcode', { required: "This field is required" })}
-                  defaultValue="123456"
-                  placeholder="Enter your passcode"
-                  className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`} />
-                {errors.passcode && <span className="invalid">{errors.passcode.message}</span>}
+                  {...register("password", { required: "This field is required" })}
+                  placeholder="Enter your password"
+                  className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
+                />
+                {errors.password && <span className="invalid">{errors.password.message}</span>}
               </div>
             </div>
             <div className="form-group">
               <Button size="lg" className="btn-block" type="submit" color="primary">
-                {loading ? <Spinner size="sm" color="light" /> : "Sign in"}
+                {isLoading ? <Spinner size="sm" color="light" /> : "Sign in"}
               </Button>
             </div>
           </Form>
@@ -163,6 +165,17 @@ const Login = () => {
         </PreviewCard>
       </Block>
       <AuthFooter />
-  </>;
+    </>
+  );
 };
 export default Login;
+
+async function loginRequest(value) {
+  try {
+    let response = await axios.post(`${process.env.REACT_APP_API_URL}login/`, value);
+    return response?.data;
+  } catch (error) {
+    throw Error(error?.response?.data?.message || error || "Error On Sign In");
+    // return error;
+  }
+}

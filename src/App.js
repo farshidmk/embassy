@@ -1,12 +1,23 @@
-import Router from "./route/Index";
+import Router from "./routes";
 
 import ThemeProvider from "./layout/provider/Theme";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const App = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+      },
+    },
+  });
+
   return (
-    <ThemeProvider>
-      <Router />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <Router />
+      </ThemeProvider>
+    </QueryClientProvider>
   );
 };
 export default App;

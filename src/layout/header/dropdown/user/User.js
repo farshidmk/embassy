@@ -3,13 +3,15 @@ import UserAvatar from "../../../../components/user/UserAvatar";
 import { DropdownToggle, DropdownMenu, Dropdown } from "reactstrap";
 import { Icon } from "../../../../components/Component";
 import { LinkList, LinkItem } from "../../../../components/links/Links";
+import { useAuth } from "../../../../hooks/useAuth";
 
 const User = () => {
+  const { logout } = useAuth();
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((prevState) => !prevState);
 
   const handleSignout = () => {
-    localStorage.removeItem("accessToken");
+    logout();
   };
 
   return (
