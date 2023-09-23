@@ -25,9 +25,20 @@ import {
   PreviewAltCard,
   BlockBetween,
 } from "../components/Component";
+import { useAuth } from "../hooks/useAuth";
+import { useQuery } from "@tanstack/react-query";
 
 const Homepage = () => {
+  const Auth = useAuth();
   const [sm, updateSm] = useState(false);
+
+  const { data, status } = useQuery({
+    queryKey: "class/student-class/",
+    queryFn: Auth.getRequest,
+    staleTime: Infinity,
+  });
+
+  console.log({ data, status });
   return (
     <>
       <Head title="Homepage"></Head>
