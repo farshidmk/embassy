@@ -26,9 +26,8 @@ const Login = () => {
   const { isLoading, mutate, error } = useMutation({
     mutationFn: loginRequest,
     onSuccess: (res) => {
-      console.log({ res });
-      Auth.storeToken("123123");
-      Auth.setUserInfo({ name: "admin", res });
+      Auth.storeToken(res?.role);
+      Auth.setUserInfo({ name: res?.user?.first_name, res });
       navigate("/");
     },
   });

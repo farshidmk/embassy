@@ -6,7 +6,7 @@ import useLocalStorage from "../hooks/useLocalStorage";
 export const AuthContext = React.createContext(null);
 
 const AuthProvider = ({ children }) => {
-  const [token, setToken] = useCookie("token", "");
+  const [token, setToken] = useCookie("role", "");
   const [userInfo, setUserInfo] = useLocalStorage("userInfo", { full_name: "", user_id: 0 });
 
   function storeToken(token) {
