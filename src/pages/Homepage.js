@@ -33,7 +33,7 @@ const Homepage = () => {
   const [sm, updateSm] = useState(false);
 
   const { data, status } = useQuery({
-    queryKey: "class/student-class/",
+    queryKey: "classes/",
     queryFn: Auth.getRequest,
     staleTime: Infinity,
   });

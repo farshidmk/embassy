@@ -22,9 +22,6 @@ const AuthProvider = ({ children }) => {
       let requestOptions = {
         url: entity,
         method,
-        headers: {
-          Authorization: "Bearer " + token,
-        },
         redirect: "follow",
         ...(data && { data: JSON.stringify(data) }),
       };
