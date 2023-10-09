@@ -6,10 +6,9 @@ import News from "../news/News";
 import User from "./dropdown/user/User";
 import Notification from "./dropdown/notification/Notification";
 
-import { useTheme, useThemeUpdate } from '../provider/Theme';
+import { useTheme, useThemeUpdate } from "../provider/Theme";
 
 const Header = ({ fixed, className, ...props }) => {
-
   const theme = useTheme();
   const themeUpdate = useThemeUpdate();
 
@@ -39,10 +38,10 @@ const Header = ({ fixed, className, ...props }) => {
           </div>
           <div className="nk-header-tools">
             <ul className="nk-quick-nav">
-              <li className="user-dropdown"  onClick={themeUpdate.sidebarHide}>
+              <li className="user-dropdown" onClick={themeUpdate.sidebarHide}>
                 <User />
               </li>
-              <li className="notification-dropdown me-n1"  onClick={themeUpdate.sidebarHide}>
+              <li className="notification-dropdown me-n1" onClick={themeUpdate.sidebarHide}>
                 <Notification />
               </li>
             </ul>

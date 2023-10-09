@@ -6,7 +6,11 @@ import { LinkList, LinkItem } from "../../../../components/links/Links";
 import { useAuth } from "../../../../hooks/useAuth";
 
 const User = () => {
-  const { logout } = useAuth();
+  const { logout, userInfo } = useAuth();
+  const USER_FIRST_NAME = userInfo?.first_name || "firstName";
+  const USER_LAST_NAME = userInfo?.last_name || "lastName";
+  const USER_FULL_NAME = USER_FIRST_NAME + " " + USER_LAST_NAME;
+
   const [open, setOpen] = useState(false);
   const toggle = () => setOpen((prevState) => !prevState);
 
@@ -27,8 +31,8 @@ const User = () => {
         <div className="user-toggle">
           <UserAvatar icon="user-alt" className="sm" />
           <div className="user-info d-none d-md-block">
-            <div className="user-status">Administrator</div>
-            <div className="user-name dropdown-indicator">Abu Bin Ishityak</div>
+            <div className="user-status">{userInfo?.username}</div>
+            <div className="user-name dropdown-indicator">{USER_FULL_NAME}</div>
           </div>
         </div>
       </DropdownToggle>
@@ -36,10 +40,10 @@ const User = () => {
         <div className="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
           <div className="user-card sm">
             <div className="user-avatar">
-              <span>AB</span>
+              <span>{USER_FIRST_NAME[0] + USER_LAST_NAME[0]}</span>
             </div>
             <div className="user-info">
-              <span className="lead-text">Abu Bin Ishtiyak</span>
+              <span className="lead-text">{USER_FULL_NAME}</span>
               <span className="sub-text">info@softnio.com</span>
             </div>
           </div>
@@ -59,7 +63,7 @@ const User = () => {
         </div>
         <div className="dropdown-inner">
           <LinkList>
-            <a href={`${process.env.PUBLIC_URL}/auth-login`} onClick={handleSignout}>
+            <a href={`${process.env.PUBLIC_URL}/login`} onClick={handleSignout}>
               <Icon name="signout"></Icon>
               <span>Sign Out</span>
             </a>

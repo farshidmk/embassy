@@ -21,7 +21,11 @@ import { Link } from "react-router-dom";
 const Register = () => {
   const [passState, setPassState] = useState(false);
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const navigate = useNavigate();
   const handleFormSubmit = () => {
     setLoading(true);
@@ -29,8 +33,9 @@ const Register = () => {
       navigate(`${process.env.PUBLIC_URL}/auth-success`);
     }, 1000);
   };
-  return <>
-    <Head title="Register" />
+  return (
+    <>
+      <Head title="Register" />
       <Block className="nk-block-middle nk-auth-body  wide-xs">
         <div className="brand-logo pb-4 text-center">
           <Link to={`${process.env.PUBLIC_URL}/`} className="logo-link">
@@ -56,9 +61,10 @@ const Register = () => {
                 <input
                   type="text"
                   id="name"
-                  {...register('name', { required: true })}
+                  {...register("name", { required: true })}
                   placeholder="Enter your name"
-                  className="form-control-lg form-control" />
+                  className="form-control-lg form-control"
+                />
                 {errors.name && <p className="invalid">This field is required</p>}
               </div>
             </div>
@@ -73,9 +79,10 @@ const Register = () => {
                   type="text"
                   bssize="lg"
                   id="default-01"
-                  {...register('email', { required: true })}
+                  {...register("email", { required: true })}
                   className="form-control-lg form-control"
-                  placeholder="Enter your email address or username" />
+                  placeholder="Enter your email address or username"
+                />
                 {errors.email && <p className="invalid">This field is required</p>}
               </div>
             </div>
@@ -101,9 +108,10 @@ const Register = () => {
                 <input
                   type={passState ? "text" : "password"}
                   id="password"
-                  {...register('passcode', { required: "This field is required" })}
+                  {...register("passcode", { required: "This field is required" })}
                   placeholder="Enter your passcode"
-                  className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`} />
+                  className={`form-control-lg form-control ${passState ? "is-hidden" : "is-shown"}`}
+                />
                 {errors.passcode && <span className="invalid">{errors.passcode.message}</span>}
               </div>
             </div>
@@ -116,7 +124,7 @@ const Register = () => {
           <div className="form-note-s2 text-center pt-4">
             {" "}
             Already have an account?{" "}
-            <Link to={`${process.env.PUBLIC_URL}/auth-login`}>
+            <Link to={`${process.env.PUBLIC_URL}/login`}>
               <strong>Sign in instead</strong>
             </Link>
           </div>
@@ -152,6 +160,7 @@ const Register = () => {
         </PreviewCard>
       </Block>
       <AuthFooter />
-  </>;
+    </>
+  );
 };
 export default Register;

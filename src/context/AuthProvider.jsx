@@ -7,7 +7,7 @@ export const AuthContext = React.createContext(null);
 
 const AuthProvider = ({ children }) => {
   const [token, setToken] = useCookie("role", "");
-  const [userInfo, setUserInfo] = useLocalStorage("userInfo", { full_name: "", user_id: 0 });
+  const [userInfo, setUserInfo] = useLocalStorage("userInfo", { first_name: "", last_name: "", username: "", uid: 0 });
 
   function storeToken(token) {
     setToken(token);
@@ -15,6 +15,7 @@ const AuthProvider = ({ children }) => {
 
   function logout() {
     setToken("");
+    setUserInfo(undefined);
   }
 
   const serverCall = async ({ entity, method, data = { test: 1 } }) => {

@@ -11,16 +11,16 @@ export function useThemeUpdate() {
   return useContext(ThemeUpdateContext);
 }
 
+const defaultTheme = {
+  main: "default", //other value can be passed "clean,shady,softy"
+  sidebar: "dark", //other value can be passed "light,white,theme"
+  sidebarCompact: false,
+  sidebarVisibility: false,
+  sidebarMobile: false,
+  header: "dark", //other value can be passed "light,dark,theme"
+  skin: "light", //other value can be passed "dark"
+};
 const ThemeProvider = ({ ...props }) => {
-  const defaultTheme = {
-    main: "default", //other value can be passed "clean,shady,softy"
-    sidebar: "dark", //other value can be passed "light,white,theme"
-    sidebarCompact: false,
-    sidebarVisibility: false,
-    sidebarMobile: false,
-    header: "dark", //other value can be passed "light,dark,theme"
-    skin: "light", //other value can be passed "dark"
-  };
   const [theme, setTheme] = useState(defaultTheme);
 
   const themeUpdate = {
@@ -95,16 +95,16 @@ const ThemeProvider = ({ ...props }) => {
     }
   }, [theme]);
 
-  const body = document.querySelector("body");
-  const observer = new ResizeObserver((entries) => {
-    let width = entries[0].contentRect.width;
-    if (width < 1200) {
-      setTheme({ ...theme, sidebarMobile: true });
-    } else {
-      setTheme({ ...theme, sidebarMobile: false, sidebarVisibility: false });
-    }
-  });
-  observer.observe(body);
+  // const body = document.querySelector("body");
+  // const observer = new ResizeObserver((entries) => {
+  //   let width = entries[0].contentRect.width;
+  //   if (width < 1200) {
+  //     setTheme({ ...theme, sidebarMobile: true });
+  //   } else {
+  //     setTheme({ ...theme, sidebarMobile: false, sidebarVisibility: false });
+  //   }
+  // });
+  // observer.observe(body);
 
   return (
     <ThemeContext.Provider value={theme}>

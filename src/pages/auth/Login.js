@@ -27,7 +27,7 @@ const Login = () => {
     mutationFn: loginRequest,
     onSuccess: (res) => {
       Auth.storeToken(res?.role);
-      Auth.setUserInfo({ name: res?.user?.first_name, res });
+      Auth.setUserInfo({ ...res?.user });
       navigate("/");
     },
   });
