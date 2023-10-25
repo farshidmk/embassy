@@ -1,23 +1,13 @@
-import {
-  Alert,
-  Box,
-  Button,
-  CircularProgress,
-  IconButton,
-  InputAdornment,
-  TextField,
-  Typography,
-  alpha,
-} from "@mui/material";
+import { Alert, Box, Button, CircularProgress, IconButton, InputAdornment, TextField, alpha } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
-import { api } from "../../services/axios";
 import { useAuth } from "hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@mui/icons-material";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
+import axios from "axios";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required("Please fill the username field"),
@@ -32,6 +22,12 @@ const LoginPage = () => {
 
   const { isLoading, mutate, error } = useMutation({
     mutationFn: loginRequest,
+
+    onSuccess: (response) => {
+      let { first_name, last_name, username, uid } = response.user;
+      Auth.setUserInfo({ username, first_name, last_name, uid });
+      navigate("/dashboard");
+    },
   });
 
   const {
@@ -44,21 +40,7 @@ const LoginPage = () => {
 
   const onSubmit = (data) => {
     let { username, password } = data;
-    mutate(
-      { password, username },
-      {
-        onSuccess: (response) => {
-          if (response.code !== 200) {
-            throw new Error(response.message);
-          }
-          let { user_id, full_name } = response.result;
-          Auth.storeToken(response?.result?.token);
-          Auth.setPrivilages(response?.result?.roles?.privileges);
-          Auth.setUserInfo({ user_id, full_name });
-          navigate("/dashboard");
-        },
-      }
-    );
+    mutate({ password, username });
   };
 
   return (
@@ -163,7 +145,7 @@ export default LoginPage;
 
 async function loginRequest(value) {
   try {
-    let response = await api.post("login", value);
+    let response = await axios.post(`http://37.156.145.155:8000/login/`, value);
     return response?.data;
   } catch (error) {
     throw Error(error?.response?.data?.message);

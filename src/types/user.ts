@@ -29,6 +29,9 @@ export interface ISelectedUser {
 }
 
 export interface ILoggedInUser {
-  full_name: string;
-  user_id: number;
+  first_name: string;
+  last_name: string;
+  uid: string;
+  email: string;
+  username: string;
 }

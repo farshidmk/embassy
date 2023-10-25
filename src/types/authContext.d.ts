@@ -1,14 +1,13 @@
 import { ILoggedInUser } from "./user";
 
 export type TAuthContext = {
-  token: string;
-  storeToken: (token: string) => void;
   serverCall: (params: TServerCall) => any;
   getRequest: ({ queryKey }: { queryKey: QueryFunction<unknown, QueryKey, any> }) => any;
   isUserLoggedIn: boolean;
   logout: () => void;
   setUserInfo: (ILoggedInUser) => void;
   userInfo: ILoggedInUser;
+  storeToken: (token: string) => void;
 };
 
 export type TServerCall = {

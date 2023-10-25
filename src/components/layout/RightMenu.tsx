@@ -13,6 +13,8 @@ import { DRAWER_WIDTH, DrawerHeader } from "./Layout";
 import { Link } from "react-router-dom";
 import { Box, Icon, SvgIcon } from "@mui/material";
 import AppsIcon from "@mui/icons-material/Apps";
+import Groups2Icon from "@mui/icons-material/Groups2";
+import Diversity2Icon from "@mui/icons-material/Diversity2";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
@@ -102,6 +104,7 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
                       fontSize: open ? "1rem" : "8px",
                       transition: "opacity 0.8s linear",
                       textWrap: open ? "wrap" : "no-wrap",
+                      color: (theme) => theme.palette.secondary.main,
                     }}
                   />
                 </ListItemButton>
@@ -116,27 +119,27 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
 
 export default RightMenu;
 
-function ShowIcon(props: { icon?: string; color?: any }) {
+function ShowIcon(props: { icon?: string | React.ReactElement; color?: any }) {
   if (!props?.icon) return <AppsIcon />;
-  if (props.icon.toLocaleUpperCase().startsWith("SVG")) {
+  if (typeof props.icon === "string" && props.icon.toLocaleUpperCase().startsWith("SVG")) {
     return (
       <SvgIcon color={props?.color ? props.color : "primary"}>
         <path d={props.icon.substring(3)} />
       </SvgIcon>
     );
   }
-  return <Icon color={props?.color ? props.color : "primary"}>{props.icon}</Icon>;
+  return <Icon color={props?.color ? props.color : "secondary"}>{props.icon}</Icon>;
 }
 
 const MENU_ITEMS = [
   {
     title: "Users",
-    icon: "users",
+    icon: <Groups2Icon />,
     link: "users",
   },
   {
     title: "Clubs",
-    icon: "club",
+    icon: <Diversity2Icon />,
     link: "clubs",
   },
   {

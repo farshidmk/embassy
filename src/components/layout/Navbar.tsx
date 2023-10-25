@@ -10,7 +10,6 @@ import { useAuth } from "hooks/useAuth";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
-import Switch from "@mui/material/Switch";
 import "./Navbar.css";
 
 interface AppBarProps extends MuiAppBarProps {
@@ -129,7 +128,7 @@ const Navbar: React.FC<Props> = ({ open, handleDrawerOpen }) => {
               <AccountCircleIcon sx={{ fontSize: "28px" }} color="inherit" />
             </IconButton>
             <Typography variant="body2" color="inherit" fontWeight={600}>
-              {Auth?.userInfo?.full_name}
+              {Auth?.userInfo?.first_name}
             </Typography>
           </Box>
         </Toolbar>

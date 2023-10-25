@@ -1,10 +1,7 @@
 import React from "react";
 import { TAuthContext, TServerCall } from "../types/authContext";
-import useCookie from "react-use-cookie";
 import { api } from "services/axios";
-import useLocalStorage from "hooks/useLocalStorge";
-import { ILoggedInUser } from "types/user";
-import { convertArabicCharToPersian } from "services/convertArabicCharToPersian";
+import useCookie from "react-use-cookie";
 
 interface Props {
   children: React.ReactNode;
@@ -14,8 +11,16 @@ export const AuthContext = React.createContext<TAuthContext | null>(null);
 
 const AuthProvider: React.FC<Props> = ({ children }) => {
   const [token, setToken] = useCookie("token", "");
-  const [userInfo, setUserInfo] = useLocalStorage<ILoggedInUser>("userInfo", { full_name: "", user_id: 0 });
-
+  const [userInfo, setUserInfo] = useCookie(
+    "userInfo",
+    JSON.stringify({
+      first_name: "",
+      last_name: "",
+      email: "",
+      uid: "1",
+      username: "",
+    })
+  );
   function storeToken(token: string) {
     // let tempDay = getExpireDate(token);
     let tempDay = 1;
@@ -27,13 +32,12 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   const serverCall = async ({ entity, method, data = { test: 1 } }: TServerCall) => {
     try {
       let requestOptions = {
-        url: convertArabicCharToPersian(entity),
-        method,
+        url: entity,
         headers: {
-          Authorization: "Bearer " + token,
+          Authorize: "Bearer " + token,
         },
-        redirect: "follow",
-        ...(data && { data: convertArabicCharToPersian(JSON.stringify(data)) }),
+        method,
+        ...(data && { data: JSON.stringify(data) }),
       };
 
       let response = await api({ ...requestOptions });
@@ -49,6 +53,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
   async function logout() {
     setToken("");
+    setUserInfo("");
   }
 
   const getRequest = async ({
@@ -71,14 +76,13 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   return (
     <AuthContext.Provider
       value={{
-        token,
-        storeToken,
         serverCall,
         getRequest,
-        isUserLoggedIn: !!token,
+        isUserLoggedIn: Boolean(JSON.parse(userInfo).uid),
         logout,
-        userInfo,
-        setUserInfo,
+        userInfo: JSON.parse(userInfo),
+        setUserInfo: (info) => setUserInfo(JSON.stringify(info)),
+        storeToken,
       }}
     >
       {children}
