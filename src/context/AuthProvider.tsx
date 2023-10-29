@@ -53,7 +53,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
 
   async function logout() {
     setToken("");
-    setUserInfo("");
+    setUserInfo("{}");
   }
 
   const getRequest = async ({
