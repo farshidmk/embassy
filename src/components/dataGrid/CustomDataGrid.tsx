@@ -15,36 +15,6 @@ const CustomDataGrid = (props: Props) => {
     <Grid container spacing={0}>
       <Grid item xs={12} sx={{ minHeight: "200px" }}>
         <DataGrid
-          localeText={{
-            toolbarDensity: "اندازه",
-            toolbarDensityLabel: "اندازه سطر",
-            toolbarDensityCompact: "کوچک",
-            toolbarDensityStandard: "متوسط",
-            toolbarDensityComfortable: "بزرگ",
-
-            toolbarFilters: "فیلتر",
-            toolbarFiltersLabel: "فیلتر",
-            toolbarFiltersTooltipHide: "مخفی کردن فیلتر",
-            toolbarFiltersTooltipShow: "نمایش فیلتر",
-
-            toolbarExport: "دریافت خروجی",
-            toolbarExportCSV: "دریافت فایل CSV",
-            toolbarExportPrint: "پرینت",
-
-            toolbarColumns: "ستون ها",
-            toolbarColumnsLabel: "ستون ها",
-
-            MuiTablePagination: {
-              labelRowsPerPage: "تعداد ردیف",
-              lang: "fa",
-              dir: "rtl",
-              labelDisplayedRows: ({ from, to, count }) => {
-                return `${from}–${to} از ${count !== -1 ? count : `نمایش بیشتر ${to}`}`;
-              },
-            },
-
-            noRowsLabel: "داده ای یافت نشد",
-          }}
           pageSizeOptions={[5, 10, 20, 50, 100]}
           disableColumnMenu
           {...(setFilters && {

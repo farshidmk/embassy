@@ -23,6 +23,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   );
   function storeToken(token: string) {
     // let tempDay = getExpireDate(token);
+    console.log({ token });
     let tempDay = 1;
     setToken(token, {
       days: tempDay,
@@ -34,7 +35,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
       let requestOptions = {
         url: entity,
         headers: {
-          Authorize: "Bearer " + token,
+          Authorization: "Bearer " + token,
         },
         method,
         ...(data && { data: JSON.stringify(data) }),

@@ -35,3 +35,14 @@ export interface ILoggedInUser {
   email: string;
   username: string;
 }
+
+export interface IUser {
+  first_name: string;
+  last_name: string;
+  username: string;
+  email: string;
+  role: string;
+  gender: string;
+  last_login: string;
+  parent: string;
+}

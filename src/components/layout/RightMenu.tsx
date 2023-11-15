@@ -143,8 +143,8 @@ const MENU_ITEMS = [
     link: "clubs",
   },
   {
-    title: "Users",
-    icon: "users",
-    link: "users",
+    title: "Classes",
+    icon: "classes",
+    link: "classes",
   },
 ];
