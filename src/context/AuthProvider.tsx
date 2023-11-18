@@ -23,7 +23,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   );
   function storeToken(token: string) {
     // let tempDay = getExpireDate(token);
-    console.log({ token });
     let tempDay = 1;
     setToken(token, {
       days: tempDay,
@@ -38,7 +37,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
           Authorization: "Bearer " + token,
         },
         method,
-        ...(data && { data: JSON.stringify(data) }),
+        ...(data && { data }),
       };
 
       let response = await api({ ...requestOptions });
@@ -47,7 +46,10 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
       } else {
         throw new Error(`Unexpected Error - ${response?.statusText}`);
       }
-    } catch (e) {
+    } catch (e: any) {
+      if (e?.response?.status === 401) {
+        logout();
+      }
       throw new Error(JSON.stringify(e) || `Unexpected Error`);
     }
   };
@@ -62,6 +64,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   }: {
     queryKey: string | number | boolean | Array<number | boolean | string>;
   }) => {
+    console.log("first");
     let tempEntity = queryKey;
     if (Array.isArray(queryKey)) {
       tempEntity = queryKey.join("/");

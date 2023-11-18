@@ -9,6 +9,9 @@ import NotFound from "components/errorPages/notFound/NotFound";
 import Profile from "components/profile/Profile";
 import Classes from "pages/classes/Classes";
 import Users from "pages/users/Users";
+import NewUser from "pages/users/NewUser";
+import Clubs from "pages/clubs/Clubs";
+import NewClub from "pages/clubs/NewClub";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -19,6 +22,11 @@ const AppRoutes: React.FC = () => {
         </Route>
         <Route path="/users">
           <Route index element={<Users />} />
+          <Route path="new" element={<NewUser />} />
+        </Route>
+        <Route path="/clubs">
+          <Route index element={<Clubs />} />
+          <Route path="new" element={<NewClub />} />
         </Route>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="dashboard" index element={<Dashboard />} />

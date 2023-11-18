@@ -16,6 +16,7 @@ import {
 import ErrorHandler from "components/errorHandler/ErrorHandler";
 import React from "react";
 import { IRenderFormInput, TOption } from "types/render";
+import PasswordInput from "./PasswordInput";
 
 const RenderFormInput: React.FC<IRenderFormInput> = (props) => {
   const { name, label, errors, elementProps, controllerField } = props;
@@ -108,6 +109,18 @@ const RenderFormInput: React.FC<IRenderFormInput> = (props) => {
         />
         {Boolean(errors?.[name]?.message) && <FormHelperText error={true}>{errors?.[name]?.message}</FormHelperText>}
       </FormGroup>
+    );
+  }
+
+  if (props.inputType === "password") {
+    return (
+      <PasswordInput
+        name={name}
+        label={label}
+        errors={errors?.[name]?.message}
+        controllerField={controllerField}
+        elementProps={elementProps}
+      />
     );
   }
 

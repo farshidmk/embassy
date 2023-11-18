@@ -1,6 +1,7 @@
 import { Skeleton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
+import CreateNewItem from "components/buttons/CreateNewItem";
 import CustomDataGrid from "components/dataGrid/CustomDataGrid";
 import ErrorHandler from "components/errorHandler/ErrorHandler";
 import ShowUser from "components/render/showUser/ShowUser";
@@ -45,7 +46,7 @@ const Classes = (props: Props) => {
 
   return (
     <>
-      <div>Classes</div>
+      <CreateNewItem name="class" />
       {status === "error" ? (
         <ErrorHandler onRefetch={refetch} />
       ) : status === "loading" ? (

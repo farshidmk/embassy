@@ -4,59 +4,64 @@ import { useQuery } from "@tanstack/react-query";
 import CreateNewItem from "components/buttons/CreateNewItem";
 import CustomDataGrid from "components/dataGrid/CustomDataGrid";
 import ErrorHandler from "components/errorHandler/ErrorHandler";
-// import ShowUser from "components/render/showUser/ShowUser";
+import ShowUser from "components/render/showUser/ShowUser";
 import { useAuth } from "hooks/useAuth";
 import React, { useMemo } from "react";
-import { ILoggedInUser } from "types/user";
+import { IClub } from "types/club";
 
-const Users = () => {
+const Clubs = () => {
   const Auth = useAuth();
-
   const columns = useMemo(
-    (): GridColDef<ILoggedInUser>[] => [
+    (): GridColDef<IClub>[] => [
       {
-        field: "first_name",
-        headerName: "First Name",
+        field: "uid",
+        headerName: "UID",
         flex: 1,
       },
+      { field: "title", headerName: "Title", flex: 1 },
       {
-        field: "last_name",
-        headerName: "Last Name",
-        flex: 1,
-      },
-      { field: "username", headerName: "Username", flex: 1 },
-      { field: "email", headerName: "Email", flex: 1 },
-      { field: "role", headerName: "Role", flex: 1 },
-      {
-        field: "gender",
-        headerName: "Gender",
-        flex: 1,
-        renderCell: ({ value }) => {
-          console.log({ value });
-          return value;
-        },
-      },
-      {
-        field: "last_login",
-        headerName: "Last Login",
+        field: "CreatedOn",
+        headerName: "Create Date",
         flex: 1,
         renderCell: ({ value }) => {
           let date = new Date(value);
           return date.toLocaleString();
         },
       },
-      { field: "parent", headerName: "Parent", flex: 1 },
+      { field: "picture", headerName: "Picture", flex: 1 },
+      {
+        field: "discription",
+        headerName: "Description",
+        flex: 1,
+        renderCell: ({ value }) => {
+          return value;
+        },
+      },
+      {
+        field: "end_date",
+        headerName: "End Date",
+        flex: 1,
+        renderCell: ({ value }) => {
+          let date = new Date(value);
+          return date.toLocaleString();
+        },
+      },
+      { field: "time_span", headerName: "Time Span", flex: 1 },
+      { field: "capacity", headerName: "Capacity", flex: 1 },
+      { field: "Created", headerName: "Created By", flex: 1, renderCell: ({ value }) => <ShowUser userId={value} /> },
+      { field: "teacher", headerName: "Teacher", flex: 1 },
+      { field: "right_class", headerName: "Right Class", flex: 1 },
     ],
     []
   );
   const { data, status, refetch } = useQuery({
-    queryKey: ["classes"],
+    queryKey: ["clubs"],
     queryFn: Auth?.getRequest,
   });
 
   return (
     <>
-      <CreateNewItem name="user" />
+      <CreateNewItem name="club" />
       {status === "error" ? (
         <ErrorHandler onRefetch={refetch} />
       ) : status === "loading" ? (
@@ -68,4 +73,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Clubs;

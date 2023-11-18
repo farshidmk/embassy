@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Navbar from "./Navbar";
 import RightMenu from "./RightMenu";
 import { styled } from "@mui/material/styles";
-import { CssBaseline } from "@mui/material";
+import { Container, CssBaseline } from "@mui/material";
 
 export const DRAWER_WIDTH = 280;
 
@@ -42,7 +42,9 @@ const Layout: React.FC<Props> = ({ children }) => {
           sx={{ display: "flex", flexDirection: "column", flexGrow: 1, width: "100%", height: "100vh" }}
         >
           <DrawerHeader />
-          <Box sx={{ p: 2, width: "100%", height: "100%" }}>{children}</Box>
+          <Container maxWidth="xl">
+            <Box sx={{ p: 2, width: "100%", height: "100%" }}>{children}</Box>
+          </Container>
         </Box>
       </Box>
     </Box>

@@ -21,7 +21,7 @@ const FormButtons: React.FC<Props> = ({ onBack, onSave, isLoading }) => {
           color="success"
           sx={{ mx: 2, width: "150px" }}
         >
-          ذخیره
+          save
         </Button>
       )}
       {onBack && (
@@ -32,7 +32,7 @@ const FormButtons: React.FC<Props> = ({ onBack, onSave, isLoading }) => {
           color="secondary"
           sx={{ mx: 2, width: "150px" }}
         >
-          بازگشت
+          back
         </Button>
       )}
     </Box>
