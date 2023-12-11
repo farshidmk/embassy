@@ -4,7 +4,7 @@ import MuiDrawer from "@mui/material/Drawer";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
-import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
@@ -70,7 +70,7 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
       >
         <Box component="img" src="/logo192.png" sx={{ width: "auto", height: "30px", ml: 2 }} />
         <IconButton onClick={handleDrawerClose} sx={{ color: (theme) => theme.palette.grey[300] }}>
-          <ChevronRightIcon />
+          <ChevronLeftIcon />
         </IconButton>
       </DrawerHeader>
       <Divider />
@@ -143,8 +143,8 @@ const MENU_ITEMS = [
     link: "clubs",
   },
   {
-    title: "Users",
-    icon: "users",
-    link: "users",
+    title: "Classes",
+    icon: "classes",
+    link: "classes",
   },
 ];

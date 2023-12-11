@@ -1,8 +1,8 @@
 ## Project 
 
-User interface for admin panel to control  phoenix switch core 
+Club Manager Panel
 
 ## Tools
 
-* react
-* react query
+- react
+- react query

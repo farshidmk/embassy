@@ -30,7 +30,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   }
 
   function logout() {
-    console.log("logout");
     setToken("");
     setUserInfo("{}");
   }
@@ -40,12 +39,10 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
       let requestOptions = {
         url: entity,
         headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,PATCH,OPTIONS",
           Authorization: "Bearer " + token,
         },
         method,
-        ...(data && { data: JSON.stringify(data) }),
+        ...(data && { data }),
       };
 
       let response = await api({ ...requestOptions });
@@ -67,6 +64,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   }: {
     queryKey: string | number | boolean | Array<number | boolean | string>;
   }) => {
+    console.log("first");
     let tempEntity = queryKey;
     if (Array.isArray(queryKey)) {
       tempEntity = queryKey.join("/");
