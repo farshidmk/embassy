@@ -26,6 +26,7 @@ const LoginPage = () => {
     onSuccess: (response) => {
       let { first_name, last_name, username, uid } = response.user;
       Auth.setUserInfo({ username, first_name, last_name, uid });
+      Auth.storeToken(response.access_token);
       navigate("/dashboard");
     },
   });

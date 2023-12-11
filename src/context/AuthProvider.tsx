@@ -29,12 +29,20 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     });
   }
 
+  function logout() {
+    console.log("logout");
+    setToken("");
+    setUserInfo("{}");
+  }
+
   const serverCall = async ({ entity, method, data = { test: 1 } }: TServerCall) => {
     try {
       let requestOptions = {
         url: entity,
         headers: {
-          Authorize: "Bearer " + token,
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "GET,POST,PUT,DELETE,PATCH,OPTIONS",
+          Authorization: "Bearer " + token,
         },
         method,
         ...(data && { data: JSON.stringify(data) }),
@@ -46,15 +54,13 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
       } else {
         throw new Error(`Unexpected Error - ${response?.statusText}`);
       }
-    } catch (e) {
+    } catch (e: any) {
+      if (e?.response?.status === 401) {
+        logout();
+      }
       throw new Error(JSON.stringify(e) || `Unexpected Error`);
     }
   };
-
-  async function logout() {
-    setToken("");
-    setUserInfo("");
-  }
 
   const getRequest = async ({
     queryKey,
