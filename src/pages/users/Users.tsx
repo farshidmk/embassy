@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import CreateNewItem from "components/buttons/CreateNewItem";
 import CustomDataGrid from "components/dataGrid/CustomDataGrid";
 import ErrorHandler from "components/errorHandler/ErrorHandler";
+import RenderRole from "components/render/renderRole/RenderRole";
 // import ShowUser from "components/render/showUser/ShowUser";
 import { useAuth } from "hooks/useAuth";
 import React, { useMemo } from "react";
@@ -26,13 +27,12 @@ const Users = () => {
       },
       { field: "username", headerName: "Username", flex: 1 },
       { field: "email", headerName: "Email", flex: 1 },
-      { field: "role", headerName: "Role", flex: 1 },
+      { field: "role", headerName: "Role", flex: 1, renderCell: ({ value }) => <RenderRole role={value} /> },
       {
         field: "gender",
         headerName: "Gender",
         flex: 1,
         renderCell: ({ value }) => {
-          console.log({ value });
           return value;
         },
       },
@@ -50,8 +50,9 @@ const Users = () => {
     []
   );
   const { data, status, refetch } = useQuery({
-    queryKey: ["classes"],
+    queryKey: ["users"],
     queryFn: Auth?.getRequest,
+    select: (res) => JSON.parse(res),
   });
 
   return (
@@ -62,7 +63,7 @@ const Users = () => {
       ) : status === "loading" ? (
         <Skeleton width={"100%"} height={"300px"} />
       ) : status === "success" ? (
-        <CustomDataGrid columns={columns} rows={data || []} getRowId={(row) => "uid"} />
+        <CustomDataGrid columns={columns} rows={data || []} getRowId={(row) => row.uid} />
       ) : null}
     </>
   );

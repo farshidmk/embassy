@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
 import { Box, Grid } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { IUser } from "types/user";
@@ -6,17 +6,17 @@ import { IRenderFormInput } from "types/render";
 import FormButtons from "components/render/buttons/FormButtons";
 import RenderFormInput from "components/render/formInputs/RenderFormInput";
 import { useAuth } from "hooks/useAuth";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSnackbar } from "hooks/useSnackbar";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "components/Alert/ErrorAlert";
+import { ROLE_SELECT } from "const/Roles";
 
 type Props = {};
 
 const NewUser = (props: Props) => {
   const Auth = useAuth();
   const snackbar = useSnackbar();
-
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
@@ -24,11 +24,41 @@ const NewUser = (props: Props) => {
     mutationFn: Auth?.serverCall,
   });
   const [error, setError] = useState("");
+
+  const {
+    data: parents,
+    status: parentsStatus,
+    refetch: parentsRefetch,
+  } = useQuery({
+    queryKey: ["user/get-by-role/parent"],
+    queryFn: Auth?.getRequest,
+  });
+
   const {
     handleSubmit,
     formState: { errors },
     control,
   } = useForm<IUser>();
+
+  const USER_ITEM: IRenderFormInput[] = useMemo(
+    () => [
+      { name: "firstname", inputType: "text", label: "First Name" },
+      { name: "lastname", inputType: "text", label: "Last Name" },
+      { name: "gender", inputType: "text", label: "Gender" },
+      { name: "role", inputType: "select", options: ROLE_SELECT, label: "Role" },
+      {
+        name: "parent",
+        inputType: "select",
+        label: "Parent",
+        options: parents,
+        status: parentsStatus,
+        refetch: parentsRefetch,
+      },
+      { name: "mail", inputType: "text", label: "Email" },
+      { name: "password", inputType: "password", label: "Password" },
+    ],
+    [parents, parentsRefetch, parentsStatus]
+  );
 
   function onBack() {
     navigate("/users");
@@ -45,8 +75,6 @@ const NewUser = (props: Props) => {
       {
         onSuccess: (res: any) => {
           if (res.code !== 200) {
-            setError(res.message);
-          } else {
             queryClient.refetchQueries({ queryKey: ["users"] });
             snackbar(res.message, "success");
             onBack();
@@ -85,13 +113,3 @@ const NewUser = (props: Props) => {
 };
 
 export default NewUser;
-
-const USER_ITEM: IRenderFormInput[] = [
-  { name: "role", inputType: "text", label: "Role" },
-  { name: "parent", inputType: "text", label: "Parent" },
-  { name: "gender", inputType: "text", label: "Gender" },
-  { name: "mail", inputType: "text", label: "Email" },
-  { name: "firstname", inputType: "text", label: "First Name" },
-  { name: "lastname", inputType: "text", label: "Last Name" },
-  { name: "password", inputType: "password", label: "Password" },
-];

@@ -140,5 +140,5 @@ const LoadingState: React.FC<{ label?: string }> = ({ label }) => {
   );
 };
 const ErrorState: React.FC<{ label?: string; refetch: () => void }> = ({ label, refetch }) => {
-  return <ErrorHandler onRefetch={refetch} errorText={`خطا در دریاف ${label} ها`} />;
+  return <ErrorHandler onRefetch={refetch} errorText={`Error on fetching ${label}`} />;
 };

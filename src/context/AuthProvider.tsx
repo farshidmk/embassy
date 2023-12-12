@@ -64,7 +64,6 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
   }: {
     queryKey: string | number | boolean | Array<number | boolean | string>;
   }) => {
-    console.log("first");
     let tempEntity = queryKey;
     if (Array.isArray(queryKey)) {
       tempEntity = queryKey.join("/");

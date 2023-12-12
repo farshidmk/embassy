@@ -1,3 +1,5 @@
+import { TRoles } from "./role";
+
 export interface IPaginationUser extends IUser {
   pageNo?: number;
   totalElements?: number;
@@ -24,7 +26,7 @@ export interface IUser {
   last_name: string;
   username: string;
   email: string;
-  role: string;
+  role: TRoles;
   gender: string;
   last_login: string;
   parent: string;

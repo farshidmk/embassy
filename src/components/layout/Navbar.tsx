@@ -11,6 +11,7 @@ import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import { useNavigate } from "react-router-dom";
 import Popover from "@mui/material/Popover";
 import "./Navbar.css";
+import ChildrenSection from "./ChildrenSection";
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -117,6 +118,7 @@ const Navbar: React.FC<Props> = ({ open, handleDrawerOpen }) => {
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }}></Box>
+          <ChildrenSection />
           <Box
             sx={{
               display: "flex",
@@ -128,7 +130,7 @@ const Navbar: React.FC<Props> = ({ open, handleDrawerOpen }) => {
               <AccountCircleIcon sx={{ fontSize: "28px" }} color="inherit" />
             </IconButton>
             <Typography variant="body2" color="inherit" fontWeight={600}>
-              {Auth?.userInfo?.first_name}
+              {`${Auth?.userInfo?.first_name} ${Auth?.userInfo?.last_name}`}
             </Typography>
           </Box>
         </Toolbar>
