@@ -8,6 +8,7 @@ import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useForm, Controller } from "react-hook-form";
 import axios from "axios";
+import styles from "./LoginPage.module.css";
 
 const validationSchema = Yup.object().shape({
   username: Yup.string().required("Please fill the username field"),
@@ -54,6 +55,7 @@ const LoginPage = () => {
         justifyContent: "center",
         alignItems: "center",
       }}
+      className={styles.container}
     >
       <Box
         component="form"
