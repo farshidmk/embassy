@@ -4,6 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import CreateNewItem from "components/buttons/CreateNewItem";
 import CustomDataGrid from "components/dataGrid/CustomDataGrid";
 import ErrorHandler from "components/errorHandler/ErrorHandler";
+import RenderGender from "components/render/renderGender/RenderGender";
 import RenderRole from "components/render/renderRole/RenderRole";
 // import ShowUser from "components/render/showUser/ShowUser";
 import { useAuth } from "hooks/useAuth";
@@ -33,7 +34,7 @@ const Users = () => {
         headerName: "Gender",
         flex: 1,
         renderCell: ({ value }) => {
-          return value;
+          return <RenderGender gender={value} />;
         },
       },
       {

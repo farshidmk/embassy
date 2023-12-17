@@ -34,8 +34,12 @@ const Classes = (props: Props) => {
         },
       },
       { field: "class_name", headerName: "Name", flex: 1 },
-      { field: "class_time_span", headerName: "Class Time Span", flex: 1 },
-      { field: "uid", headerName: "ID", flex: 1 },
+      {
+        field: "class_time_span",
+        headerName: "Class Time Span",
+        flex: 1,
+        renderCell: ({ value }) => <h1>in progress</h1>,
+      },
     ],
     []
   );
@@ -52,7 +56,7 @@ const Classes = (props: Props) => {
       ) : status === "loading" ? (
         <Skeleton width={"100%"} height={"300px"} />
       ) : status === "success" ? (
-        <CustomDataGrid columns={columns} rows={data || []} getRowId={(row) => "uid"} />
+        <CustomDataGrid columns={columns} rows={data || []} getRowId={(row) => row.uid} />
       ) : null}
     </>
   );

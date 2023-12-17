@@ -11,6 +11,7 @@ import { useSnackbar } from "hooks/useSnackbar";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import { ROLE_SELECT } from "const/Roles";
+import { GENDER_SELECT } from "const/Genders";
 
 type Props = {};
 
@@ -32,6 +33,8 @@ const NewUser = (props: Props) => {
   } = useQuery({
     queryKey: ["user/get-by-role/parent"],
     queryFn: Auth?.getRequest,
+    select: (parents: IUser[]) =>
+      parents?.map((parent) => ({ title: parent.first_name + " " + parent.last_name, value: parent.uid })),
   });
 
   const {
@@ -44,7 +47,7 @@ const NewUser = (props: Props) => {
     () => [
       { name: "firstname", inputType: "text", label: "First Name" },
       { name: "lastname", inputType: "text", label: "Last Name" },
-      { name: "gender", inputType: "text", label: "Gender" },
+      { name: "gender", inputType: "select", options: GENDER_SELECT, label: "Gender" },
       { name: "role", inputType: "select", options: ROLE_SELECT, label: "Role" },
       {
         name: "parent",

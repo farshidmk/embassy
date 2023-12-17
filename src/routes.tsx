@@ -12,6 +12,7 @@ import Users from "pages/users/Users";
 import NewUser from "pages/users/NewUser";
 import Clubs from "pages/clubs/Clubs";
 import NewClub from "pages/clubs/NewClub";
+import NewClass from "pages/classes/NewClass";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -19,6 +20,7 @@ const AppRoutes: React.FC = () => {
       <Route element={<ProtectedRoute />}>
         <Route path="/classes">
           <Route index element={<Classes />} />
+          <Route path="new" element={<NewClass />} />
         </Route>
         <Route path="/users">
           <Route index element={<Users />} />

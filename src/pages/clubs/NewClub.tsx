@@ -59,6 +59,18 @@ const NewClub = (props: Props) => {
     );
   };
 
+  const CLUB_ITEMS: IRenderFormInput[] = [
+    { name: "name", inputType: "text", label: "Name" },
+    { name: "discription", inputType: "text", label: "Description" },
+    { name: "start", inputType: "date", label: "Start Date" },
+    { name: "end", inputType: "date", label: "End Date" },
+    { name: "capacity", inputType: "text", label: "Capacity" },
+    // -------
+    { name: "teacher", inputType: "password", label: "Teacher" },
+    { name: "right_class", inputType: "password", label: "Right Class" },
+    { name: "picture", inputType: "text", label: "Picture" }, //
+  ];
+
   return (
     <>
       <Box component="form" onSubmit={handleSubmit(onSubmitHandler)}>
@@ -85,15 +97,3 @@ const NewClub = (props: Props) => {
 };
 
 export default NewClub;
-
-const CLUB_ITEMS: IRenderFormInput[] = [
-  { name: "name", inputType: "text", label: "Name" },
-  { name: "discription", inputType: "text", label: "Description" },
-  { name: "start", inputType: "date", label: "Start Date" },
-  { name: "end", inputType: "date", label: "End Date" },
-  { name: "capacity", inputType: "text", label: "Capacity" },
-  // -------
-  { name: "teacher", inputType: "password", label: "Teacher" },
-  { name: "right_class", inputType: "password", label: "Right Class" },
-  { name: "picture", inputType: "text", label: "Picture" }, //
-];
