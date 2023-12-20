@@ -1,7 +1,7 @@
 import React from "react";
 import { TGender } from "types/gender";
-import ManIcon from "@mui/icons-material/Man";
-import WomanIcon from "@mui/icons-material/Woman";
+import MaleIcon from '@mui/icons-material/Male';
+import FemaleIcon from '@mui/icons-material/Female';
 import { Tooltip } from "@mui/material";
 
 type Props = {
@@ -13,18 +13,18 @@ const RenderGender: React.FC<Props> = ({ gender }) => {
     case "female":
       return (
         <Tooltip title="Female">
-          <WomanIcon
+          <FemaleIcon
             fontSize="large"
-            sx={{ borderRadius: "50%", background: (theme) => theme.palette.info.dark, color: "white", p: 0.5 }}
+            sx={{ borderRadius: "50%", background: '#e28ead', color: "#555", p: 0.5 }}
           />
         </Tooltip>
       );
     case "male":
       return (
         <Tooltip title="Male">
-          <ManIcon
+          <MaleIcon
             fontSize="large"
-            sx={{ borderRadius: "50%", background: (theme) => theme.palette.info.light, color: "black", p: 0.5 }}
+            sx={{ borderRadius: "50%", background: '#93e1f0', color: "#555", p: 0.5 }}
           />
         </Tooltip>
       );

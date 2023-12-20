@@ -95,7 +95,9 @@ const Navbar: React.FC<Props> = ({ open, handleDrawerOpen }) => {
         position="fixed"
         open={open}
         sx={{
-          background: (theme) => theme.palette.grey[800],
+          background: '#edece7',
+          boxShadow: "none",
+          borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
           color: (theme) => theme.palette.primary.main,
         }}
       >
@@ -114,7 +116,7 @@ const Navbar: React.FC<Props> = ({ open, handleDrawerOpen }) => {
               <MenuIcon />
             </IconButton>
             <Typography variant="h6" noWrap component="div">
-              Club Manger{" "}
+              DBST Club Manger{" "}
             </Typography>
           </Box>
           <Box sx={{ flexGrow: 1 }}></Box>
@@ -132,6 +134,7 @@ const Navbar: React.FC<Props> = ({ open, handleDrawerOpen }) => {
             <Typography variant="body2" color="inherit" fontWeight={600}>
               {`${Auth?.userInfo?.first_name} ${Auth?.userInfo?.last_name}`}
             </Typography>
+
           </Box>
         </Toolbar>
       </AppBar>

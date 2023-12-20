@@ -15,6 +15,7 @@ import { Box, Icon, SvgIcon } from "@mui/material";
 import AppsIcon from "@mui/icons-material/Apps";
 import Groups2Icon from "@mui/icons-material/Groups2";
 import Diversity2Icon from "@mui/icons-material/Diversity2";
+import "./RightMenu.css";
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: DRAWER_WIDTH,
@@ -59,7 +60,7 @@ type Props = {
 
 const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
   return (
-    <Drawer variant="permanent" open={open}>
+    <Drawer className="bg-color" variant="permanent" open={open}>
       <DrawerHeader
         sx={{
           background: (theme) => theme.palette.grey[800],
@@ -77,7 +78,7 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
       <List sx={{ background: (theme) => theme.palette.grey[800], height: "100%" }}>
         {MENU_ITEMS?.map((menu) => {
           return (
-            <Link key={menu.title} to={menu.link}>
+            <Link key={menu.title} to={menu.link} className="menu-link" style={{textDecoration: "none", textTransform: "uppercase"}}>
               <ListItem disablePadding sx={{ display: "block" }}>
                 <ListItemButton
                   sx={{

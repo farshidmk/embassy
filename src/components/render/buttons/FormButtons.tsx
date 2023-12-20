@@ -12,6 +12,17 @@ type Props = {
 const FormButtons: React.FC<Props> = ({ onBack, onSave, isLoading }) => {
   return (
     <Box sx={{ width: "100%", display: "flex", alignItems: "center", justifyContent: "center", mt: 4 }}>
+      {onBack && (
+        <Button
+          variant="contained"
+          onClick={() => onBack()}
+          endIcon={<WestIcon />}
+          color="secondary"
+          sx={{ mx: 2, width: "150px" }}
+        >
+          back
+        </Button>
+      )}
       {onSave && (
         <Button
           disabled={isLoading}
@@ -22,17 +33,6 @@ const FormButtons: React.FC<Props> = ({ onBack, onSave, isLoading }) => {
           sx={{ mx: 2, width: "150px" }}
         >
           save
-        </Button>
-      )}
-      {onBack && (
-        <Button
-          variant="contained"
-          onClick={() => onBack()}
-          endIcon={<WestIcon />}
-          color="secondary"
-          sx={{ mx: 2, width: "150px" }}
-        >
-          back
         </Button>
       )}
     </Box>

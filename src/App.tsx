@@ -1,16 +1,14 @@
 import React from "react";
-import { createTheme } from "@mui/material/styles";
-import { ThemeProvider } from "@emotion/react";
-
 import AuthProvider from "./context/AuthProvider";
 import AppRoutes from "./routes";
 import { BrowserRouter } from "react-router-dom";
-import { CssBaseline } from "@mui/material";
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { SnackbarProvider } from "context/SnackbarContext";
-
-export const ColorModeContext = React.createContext({ toggleColorMode: () => {}, mode: "light" });
+import "@fontsource/ubuntu";
+export const ColorModeContext = React.createContext({ toggleColorMode: () => { }, mode: "light" });
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -21,40 +19,100 @@ const queryClient = new QueryClient({
 });
 
 function App() {
-  // const [mode, setMode] = React.useState<"light" | "dark">(
-  //   useMediaQuery("(prefers-color-scheme: dark)") ? "dark" : "light"
-  // );
-
-  // const colorMode = React.useMemo(
-  //   () => ({
-  //     toggleColorMode: () => {
-  //       setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
-  //     },
-  //   }),
-  //   []
-  // );
-
   const theme = React.useMemo(
     () =>
       createTheme({
-        // typography: {
-        //   fontFamily: `Vazirmatn`,
-        // },
+        components: {
+          MuiOutlinedInput: {
+            styleOverrides: {
+              root: {
+                borderRadius: '50px',
+              }
+            }
+          },
+          MuiButton: {
+            styleOverrides: {
+              root: {
+                borderRadius: 50,
+                border: 0,
+                boxShadow: 'none',
+              },
+            },
+          },
+          MuiTypography: {
+            defaultProps: {
+              variantMapping: {
+                h1: 'h1',
+                h2: 'h2',
+                h3: 'h3',
+                h4: 'h4',
+                h5: 'h5',
+                h6: 'h6',
+                subtitle1: 'span',
+                subtitle2: 'span',
+                body1: 'span',
+                body2: 'span',
+              },
+            },
+          },
+        },
+        
+        typography: {
+          fontFamily: 'Ubuntu, tahoma',
+          fontSize: 14,
+          body1: {
+            fontWeight: 500,
+          },
+          button: {
+            fontWeight: '500',
+            letterSpacing: '3px',
+            textTransform: 'uppercase',
+            fontSize: '14px',
+          },
+          h1: {
+            fontWeight: '700',
+            letterSpacing: '6px',
+            textTransform: 'uppercase',
+          },
+          h2: {
+            fontWeight: '700',
+            letterSpacing: '6px',
+            textTransform: 'uppercase',
+          },
+          h3: {
+            fontWeight: '700',
+            letterSpacing: '6px',
+            textTransform: 'uppercase',
+          },
+          h4: {
+            fontWeight: '700',
+            letterSpacing: '6px',
+            textTransform: 'uppercase',
+          },
+          h5: {
+            fontWeight: '700',
+            letterSpacing: '6px',
+            textTransform: 'uppercase',
+          },
+          h6: {
+            fontWeight: '700',
+            letterSpacing: '6px',
+            textTransform: 'uppercase',
+            color: '#333',
+          },
+        },
         palette: {
-          // mode,
           primary: {
-            main: "#798bff",
+            light: '#d74041',
+            main: '#d74041',
           },
           secondary: {
-            main: "#db5556",
-          },
-          background: {
-            default: "#f5f6fa",
-            paper: "#ffffff",
+            light: '#d74041',
+            main: '#d74041',
           },
         },
       }),
-    []
+    [],
   );
 
   return (

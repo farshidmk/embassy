@@ -2,8 +2,8 @@ import React from "react";
 import { TRoles } from "types/role";
 import { Chip, Tooltip } from "@mui/material";
 import EscalatorWarningIcon from "@mui/icons-material/EscalatorWarning";
-import CastForEducationIcon from "@mui/icons-material/CastForEducation";
-import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import SchoolIcon from '@mui/icons-material/School';
+import SettingsAccessibilityOutlinedIcon from '@mui/icons-material/SettingsAccessibilityOutlined';
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 
 type Props = {
@@ -13,14 +13,13 @@ type Props = {
 const RenderRole: React.FC<Props> = ({ role }) => {
   switch (role) {
     case "parent":
-      return <Chip color="primary" label="Parent" icon={<EscalatorWarningIcon />} sx={{ width: "100px" }} />;
+      return <Chip label="Parent" icon={<EscalatorWarningIcon />} sx={{ width: "100px", backgroundColor: "#edece7"}} />;
     case "student":
-      return <Chip color="primary" label="Student" icon={<LocalLibraryIcon />} sx={{ width: "100px" }} />;
+      return <Chip label="Student" icon={<SchoolIcon />} sx={{ width: "100px", backgroundColor: "#edece7" }} />;
     case "teacher":
-      return <Chip color="primary" label="Teacher" icon={<CastForEducationIcon />} sx={{ width: "100px" }} />;
+      return <Chip label="Teacher" icon={<SettingsAccessibilityOutlinedIcon />} sx={{ width: "100px", backgroundColor: "#edece7" }} />;
     case "admin":
-      return <Chip color="primary" label="Admin" icon={<AdminPanelSettingsIcon />} sx={{ width: "100px" }} />;
+      return <Chip label="Admin" icon={<AdminPanelSettingsIcon />} sx={{ width: "100px", backgroundColor: "#edece7" }} />;
   }
 };
-
 export default RenderRole;

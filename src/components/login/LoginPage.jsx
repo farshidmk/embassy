@@ -1,4 +1,4 @@
-import { Alert, Box, Button, CircularProgress, IconButton, InputAdornment, TextField, alpha } from "@mui/material";
+import { Alert, Box, Button, CircularProgress, IconButton, InputAdornment, TextField, alpha, Grid } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import React, { useState } from "react";
 import { useAuth } from "hooks/useAuth";
@@ -46,101 +46,114 @@ const LoginPage = () => {
   };
 
   return (
-    <Box
-      component="div"
-      sx={{
-        width: "100vw",
-        height: "100vh",
+
+    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+      <Grid item sx={{
         display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-      className={styles.container}
-    >
-      <Box
-        component="form"
-        maxWidth={700}
-        minWidth={500}
-        minHeight={400}
-        sx={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          flexDirection: "column",
-          background: (theme) => alpha(theme.palette.background.paper, 0.9),
-          borderRadius: 1,
-          boxShadow: "0px 0px 8px 0px white",
-          pt: 6,
-          pb: 7,
-          px: 3,
-          overflow: "auto",
-        }}
-        onSubmitCapture={handleSubmit(onSubmit)}
-      >
-        <Box component="img" sx={{ width: "auto", height: "90px" }} src="/assets/images/logo-dark.png" alt="logo" />
+        justifyContent:"center",
+        alignItems:"center",
+        flexDirection: "column",
+        background: (theme) => alpha(theme.palette.background.paper, 0.9),
+        borderRadius: 1,
+        boxShadow: "0px 0px 8px 0px white",
+        pt: 6,
+        pb: 7,
+        px: 3,
+        overflow: "auto",
+      }} className={styles.FullHeight} md={4}>
 
-        <Controller
-          control={control}
-          name="username"
-          defaultValue=""
-          render={({ field }) => (
-            <TextField
-              {...field}
-              label="Username"
-              size="small"
-              sx={{ width: "400px", backgroundColor: "#ffffffbb" }}
-              error={errors.username?.message}
-              helperText={errors.username?.message}
-            />
-          )}
-        />
-
-        <Controller
-          control={control}
-          name="password"
-          defaultValue=""
-          render={({ field }) => (
-            <TextField
-              {...field}
-              type={showPassword ? "text" : "password"}
-              label="Password"
-              size="small"
-              sx={{ width: "400px", backgroundColor: "#ffffffbb" }}
-              error={errors.password?.message}
-              helperText={errors.password?.message}
-              InputProps={{
-                endAdornment: (
-                  <InputAdornment position="end">
-                    <IconButton
-                      aria-label="toggle password visibility"
-                      onClick={() => setShowPassword(!showPassword)}
-                      edge="end"
-                    >
-                      {showPassword ? <VisibilityOff /> : <Visibility />}
-                    </IconButton>
-                  </InputAdornment>
-                ),
-              }}
-            />
-          )}
-        />
-
-        <Button
-          variant="contained"
-          sx={{ width: "400px" }}
-          type="submit"
-          endIcon={isLoading && <CircularProgress size={20} color="secondary" />}
-          disabled={isLoading}
+        <Box
+          component="form"
+          maxWidth={700}
+          minWidth={500}
+          minHeight={400}
+          sx={{
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexDirection: "column",
+            background: (theme) => alpha(theme.palette.background.paper, 0.9),
+            borderRadius: 1,
+            boxShadow: "0px 0px 8px 0px white",
+            pt: 6,
+            pb: 7,
+            px: 3,
+            overflow: "auto",
+          }}
+          onSubmitCapture={handleSubmit(onSubmit)}
         >
-          Login
-        </Button>
-        {(error?.message || !!error) && (
-          <Alert sx={{ width: "400px" }} severity="error">
-            {error?.message || "Error on connecting to server"}
-          </Alert>
-        )}
-      </Box>
-    </Box>
+          <Box component="img" sx={{ width: "auto", height: "90px" }} src="/assets/images/logo-dark.png" alt="logo" />
+
+          <Controller
+            control={control}
+            name="username"
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                label="Username"
+                size="medium"
+                sx={{ width: "400px", backgroundColor: "#ffffffbb" }}
+                error={errors.username?.message}
+                helperText={errors.username?.message}
+              />
+            )}
+          />
+
+          <Controller
+            control={control}
+            name="password"
+            defaultValue=""
+            render={({ field }) => (
+              <TextField
+                {...field}
+                type={showPassword ? "text" : "password"}
+                label="Password"
+                size="medium"
+                sx={{ width: "400px", backgroundColor: "#ffffffbb" }}
+                error={errors.password?.message}
+                helperText={errors.password?.message}
+                InputProps={{
+                  endAdornment: (
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={() => setShowPassword(!showPassword)}
+                        edge="end"
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  ),
+                }}
+              />
+            )}
+          />
+
+          <Button
+            variant="contained"
+            sx={{ width: "400px" }}
+            size="large"
+            type="submit"
+            endIcon={isLoading && <CircularProgress size={20} color="secondary" />}
+            disabled={isLoading}
+          >
+            Login
+          </Button>
+          {(error?.message || !!error) && (
+            <Alert sx={{ width: "400px" }} severity="error">
+              {error?.message || "Error on connecting to server"}
+            </Alert>
+          )}
+        </Box>
+      </Grid>
+      <Grid item className={styles.FullHeight} md={8}>
+            <Box className={styles.LoginImage}
+            >
+
+            </Box>
+      </Grid>
+    </Grid>
   );
 };
 

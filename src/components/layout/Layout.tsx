@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Navbar from "./Navbar";
 import RightMenu from "./RightMenu";
 import { styled } from "@mui/material/styles";
-import { Container, CssBaseline } from "@mui/material";
+import { Container, CssBaseline, Grid, Breadcrumbs, Link, Typography } from "@mui/material";
 
 export const DRAWER_WIDTH = 280;
 
@@ -21,7 +21,7 @@ interface Props {
 }
 
 const Layout: React.FC<Props> = ({ children }) => {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(true);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -43,7 +43,26 @@ const Layout: React.FC<Props> = ({ children }) => {
         >
           <DrawerHeader />
           <Container maxWidth="xl">
-            <Box sx={{ p: 2, width: "100%", height: "100%" }}>{children}</Box>
+            <Box sx={{ p: 2, width: "100%", height: "100%" }}>
+              <Grid container>
+                <Grid item md={12}>
+                  <Typography variant="h3" color="text.primary">Create User</Typography>
+                  <Breadcrumbs sx={{ mb:2, mt:2 }} aria-label="breadcrumb">
+                    <Link underline="none" color="inherit" href="/">
+                      Dashboard
+                    </Link>
+                    <Link underline="none"
+                      color="inherit"
+                      href="/material-ui/getting-started/installation/"
+                    >
+                      Users
+                    </Link>
+                    <Typography color="text.primary">Create User</Typography>
+                  </Breadcrumbs>
+
+                </Grid>
+              </Grid>
+              {children}</Box>
           </Container>
         </Box>
       </Box>
