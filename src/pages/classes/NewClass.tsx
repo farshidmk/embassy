@@ -10,14 +10,15 @@ import { useSnackbar } from "hooks/useSnackbar";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import { IClasses } from "types/classes";
+import TimeSpan from "components/timeSpan/TimeSpan";
 
 type Props = {};
 
 const NewClass = (props: Props) => {
   const Auth = useAuth();
   const snackbar = useSnackbar();
-
   const navigate = useNavigate();
+  const [timeSpan, setTimeSpan] = useState(DEFAULT_TIME_SPAN);
 
   const queryClient = useQueryClient();
   const { isLoading, mutate } = useMutation({
@@ -31,26 +32,25 @@ const NewClass = (props: Props) => {
   } = useForm<IClasses>();
 
   function onBack() {
-    navigate("/users");
+    navigate("/classes");
   }
 
   const onSubmitHandler = (data: IClasses) => {
     setError("");
     mutate(
       {
-        entity: "users/",
+        entity: "classes/",
         method: "post",
-        data,
+        data: {
+          ...data,
+          class_time_span: timeSpan,
+        },
       },
       {
         onSuccess: (res: any) => {
-          if (res.code !== 200) {
-            setError(res.message);
-          } else {
-            queryClient.refetchQueries({ queryKey: ["users"] });
-            snackbar(res.message, "success");
-            onBack();
-          }
+          queryClient.refetchQueries({ queryKey: ["classes"] });
+          snackbar(res.message, "success");
+          onBack();
         },
         onError: (res: any) => {
           snackbar(res.message || "Error on creating new user", "error");
@@ -77,6 +77,21 @@ const NewClass = (props: Props) => {
             </Grid>
           ))}
         </Grid>
+        <TimeSpan
+          timeSpanValue={timeSpan}
+          onChange={(day: any, period: any) => {
+            //TODO: fix type error
+            //@ts-ignore
+            let newPeriod = [...timeSpan[day]];
+            const index = newPeriod?.indexOf(period);
+            if (index > -1) {
+              newPeriod.splice(index, 1);
+            } else {
+              newPeriod.push(period);
+            }
+            setTimeSpan((p) => ({ ...p, [day]: [...newPeriod] }));
+          }}
+        />
         {error && <ErrorAlert text={error} />}
         <FormButtons onBack={onBack} onSave={handleSubmit(onSubmitHandler)} isLoading={isLoading} />
       </Box>
@@ -86,7 +101,15 @@ const NewClass = (props: Props) => {
 
 export default NewClass;
 
-const CLASS_ITEMS: IRenderFormInput[] = [
-  { name: "class_name", inputType: "text", label: "Class Name" },
-  { name: "class_time_span", inputType: "text", label: "Class Time Span" },
-];
+const CLASS_ITEMS: IRenderFormInput[] = [{ name: "class_name", inputType: "text", label: "Class Name" }];
+
+//TODO: add type
+const DEFAULT_TIME_SPAN = {
+  Sun: [],
+  Mon: [],
+  Tue: [],
+  Wed: [],
+  Thu: [],
+  Fri: [],
+  Sat: [],
+};

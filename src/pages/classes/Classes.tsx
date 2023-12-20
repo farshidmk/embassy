@@ -1,4 +1,4 @@
-import { Skeleton } from "@mui/material";
+import { Box, Skeleton } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import { useQuery } from "@tanstack/react-query";
 import CreateNewItem from "components/buttons/CreateNewItem";
@@ -6,16 +6,21 @@ import CustomDataGrid from "components/dataGrid/CustomDataGrid";
 import ErrorHandler from "components/errorHandler/ErrorHandler";
 import ShowUser from "components/render/showUser/ShowUser";
 import { useAuth } from "hooks/useAuth";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import { IClasses } from "types/classes";
+import TimeSpanModal from "./components/TimeSpanModal";
+import TimeSpan from "components/timeSpan/TimeSpan";
 
 type Props = {};
 
 const Classes = (props: Props) => {
   const Auth = useAuth();
+  //TODO: fix time span value type
+  const [selectedTimeSpan, setSelectedTimeSpan] = useState<any>();
 
   const columns = useMemo(
     (): GridColDef<IClasses>[] => [
+      { field: "class_name", headerName: "Name", flex: 1 },
       {
         field: "Created",
         headerName: "Created By",
@@ -33,12 +38,19 @@ const Classes = (props: Props) => {
           return date.toLocaleString();
         },
       },
-      { field: "class_name", headerName: "Name", flex: 1 },
       {
         field: "class_time_span",
         headerName: "Class Time Span",
         flex: 1,
-        renderCell: ({ value }) => <h1>in progress</h1>,
+        renderCell: ({ value }) => (
+          <Box
+            component="div"
+            onClick={() => setSelectedTimeSpan(value)}
+            // onMouseLeave={() => setSelectedTimeSpan(undefined)}
+          >
+            view time span
+          </Box>
+        ),
       },
     ],
     []
@@ -58,6 +70,11 @@ const Classes = (props: Props) => {
       ) : status === "success" ? (
         <CustomDataGrid columns={columns} rows={data || []} getRowId={(row) => row.uid} />
       ) : null}
+      <TimeSpanModal
+        handleClose={() => setSelectedTimeSpan(undefined)}
+        open={!!selectedTimeSpan}
+        timeSpanValue={selectedTimeSpan}
+      />
     </>
   );
 };
