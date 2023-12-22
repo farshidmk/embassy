@@ -4,6 +4,7 @@ import Navbar from "./Navbar";
 import RightMenu from "./RightMenu";
 import { styled } from "@mui/material/styles";
 import { Container, CssBaseline, Grid, Breadcrumbs, Link, Typography } from "@mui/material";
+import Header from "./Header";
 
 export const DRAWER_WIDTH = 280;
 
@@ -42,28 +43,15 @@ const Layout: React.FC<Props> = ({ children }) => {
           sx={{ display: "flex", flexDirection: "column", flexGrow: 1, width: "100%", height: "100vh" }}
         >
           <DrawerHeader />
-          <Container maxWidth="xl">
+          <Container maxWidth="xl" sx={{ flex: 1, overflow: "auto" }}>
             <Box sx={{ p: 2, width: "100%", height: "100%" }}>
-              <Grid container>
-                <Grid item md={12}>
-                  <Typography variant="h3" color="text.primary">Create User</Typography>
-                  <Breadcrumbs sx={{ mb:2, mt:2 }} aria-label="breadcrumb">
-                    <Link underline="none" color="inherit" href="/">
-                      Dashboard
-                    </Link>
-                    <Link underline="none"
-                      color="inherit"
-                      href="/material-ui/getting-started/installation/"
-                    >
-                      Users
-                    </Link>
-                    <Typography color="text.primary">Create User</Typography>
-                  </Breadcrumbs>
-
-                </Grid>
-              </Grid>
-              {children}</Box>
+              <Header />
+              {children}
+            </Box>
           </Container>
+          <Box component="footer" sx={{ height: "30px" }}>
+            Footer
+          </Box>
         </Box>
       </Box>
     </Box>
