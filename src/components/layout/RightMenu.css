@@ -2,8 +2,18 @@
 .bg-color ul {
     background-color: #edece7;
 }
+.menu-btn {
+    transition: all ease-in 0.3s;
+}
+.menu-btn:hover .menu-icon span,
+.menu-btn:hover .menu-text span,
+.menu-btn:hover {
+    background-color: #fff !important;
+}
 .menu-text span {
-    letter-spacing: 3px;
+    letter-spacing: 2px;
     font-weight: 700;
     color: #333;
+    font-size: 14px;
+    background-color: transparent;
 }

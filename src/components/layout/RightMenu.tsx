@@ -18,6 +18,7 @@ import Diversity2Icon from "@mui/icons-material/Diversity2";
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
+import ExtensionOutlinedIcon from '@mui/icons-material/ExtensionOutlined';
 import "./RightMenu.css";
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -73,12 +74,12 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
         }}
       >
         <Box component="img" src="/logo192.png" sx={{ width: "auto", height: "30px", ml: 2 }} />
-        <IconButton onClick={handleDrawerClose} sx={{ color: (theme) => theme.palette.grey[300] }}>
+        <IconButton onClick={handleDrawerClose} sx={{ color: '#333',backgroundColor: '#fff'}}>
           <ChevronLeftIcon />
         </IconButton>
       </DrawerHeader>
       <Divider />
-      <List sx={{ background: (theme) => theme.palette.grey[800], height: "100%" }}>
+      <List sx={{ height: "100%", pt:5, }}>
         {MENU_ITEMS?.map((menu) => {
           return (
             <Link key={menu.title} to={menu.link} className="menu-link" style={{textDecoration: "none", textTransform: "uppercase"}}>
@@ -86,15 +87,17 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
                 <ListItemButton
                   className="menu-btn"
                   sx={{
-                    minHeight: 48,
+                    minHeight: 60,
                     justifyContent: open ? "initial" : "center",
                     px: 2.5,
                   }}
                   // onClick={handleClick}
                 >
                   <ListItemIcon
+                    className="menu-icon"
                     sx={{
                       minWidth: 0,
+                      backgroundColor: 'transparent',
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
                     }}
@@ -106,9 +109,9 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
                     primary={menu.title}
                     sx={{
                       ml: 1,
+                      backgroundColor: 'transparent',
                       opacity: open ? 1 : 0,
                       fontSize: open ? "1rem" : "8px",
-                      transition: "opacity 0.8s linear",
                       textWrap: open ? "wrap" : "no-wrap",
                       color: (theme) => theme.palette.secondary.main,
                     }}
@@ -150,7 +153,7 @@ const MENU_ITEMS = [
   },
   {
     title: "Clubs",
-    icon: <Diversity2Icon />,
+    icon: <ExtensionOutlinedIcon />,
     link: "clubs",
   },
   {
