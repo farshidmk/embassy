@@ -14,7 +14,6 @@ import { Link } from "react-router-dom";
 import { Box, Icon, SvgIcon } from "@mui/material";
 import AppsIcon from "@mui/icons-material/Apps";
 import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
-import Diversity2Icon from "@mui/icons-material/Diversity2";
 import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';

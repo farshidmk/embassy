@@ -1,7 +1,9 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
 import { DAYS_OF_WEEK, TDaysOfWeek, TIME_SPANS } from "types/timeSpan";
-
+import CropFreeOutlinedIcon from '@mui/icons-material/CropFreeOutlined';
+import TaskAltOutlinedIcon from '@mui/icons-material/TaskAltOutlined';
+import "./TimeSpan.css";
 type Props = {
   timeSpanValue?: any;
   onChange?: (day: TDaysOfWeek, period: any) => void;
@@ -9,7 +11,7 @@ type Props = {
 
 const TimeSpan = ({ timeSpanValue = {}, onChange }: Props) => {
   return (
-    <Box component="table">
+    <Box component="table" className="time-span-table">
       <Box component="thead">
         <Box component="tr">
           <Box component="th">
@@ -21,7 +23,6 @@ const TimeSpan = ({ timeSpanValue = {}, onChange }: Props) => {
             <Box
               component="th"
               key={h.label}
-              sx={{ minWidth: "100px", borderRight: "1px solid", borderBottom: "1px solid" }}
             >
               <Box sx={{ display: "flex", flexDirection: "column" }}>
                 <Typography variant="body1" fontWeight={600}>
@@ -65,9 +66,9 @@ const ShowDay = ({ day, period, timeSpanValue }: { day: TDaysOfWeek; period: any
   const IS_FULL = timeSpanValue?.[day]?.includes(period);
   return (
     <Box
-      sx={{ height: "100%", width: "100%", background: (theme) => theme.palette[IS_FULL ? "warning" : "success"].main }}
+      sx={{ height: "100%", width: "100%" }}
     >
-      {IS_FULL ? "Full" : "Empty"}
+      {IS_FULL ? <TaskAltOutlinedIcon sx={{color: '#285b45'}}/> : <CropFreeOutlinedIcon sx={{color: '#eeb601'}} />}
     </Box>
   );
 };
