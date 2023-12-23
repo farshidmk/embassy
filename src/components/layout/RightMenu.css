@@ -2,3 +2,8 @@
 .bg-color ul {
     background-color: #edece7;
 }
+.menu-text span {
+    letter-spacing: 3px;
+    font-weight: 700;
+    color: #333;
+}

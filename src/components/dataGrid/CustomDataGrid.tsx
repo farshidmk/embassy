@@ -13,9 +13,18 @@ const CustomDataGrid = (props: Props) => {
   const { setFilters, filters } = props;
   return (
     <Grid container spacing={0}>
-      <Grid item xs={12} sx={{ minHeight: "200px" }}>
+      <Grid item md={12} sx={{ minHeight: "200px" }}>
         <DataGrid
-          pageSizeOptions={[5, 10, 20, 50, 100]}
+          sx={{
+            mt: 4,
+            py: 2,
+            px: 3,
+            backgroundColor: 'rgba(255,255,255,0.6)',
+            borderRadius: 5,
+            boxShadow: '0 0 25px rgba(30,30,30,0.3)',
+          }}
+          autoHeight 
+          pageSizeOptions={[ 10, 20, 50, 100]}
           disableColumnMenu
           {...(setFilters && {
             onSortModelChange: (sort) => {

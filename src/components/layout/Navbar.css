@@ -30,6 +30,7 @@ div.account-menu-btn:hover{
     box-shadow: 0 0 0;
     border-radius: 0;
 }
+.bg-color,
 .bg-color header {
     background-color: #edece7;
 }

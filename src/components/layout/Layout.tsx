@@ -3,8 +3,10 @@ import Box from "@mui/material/Box";
 import Navbar from "./Navbar";
 import RightMenu from "./RightMenu";
 import { styled } from "@mui/material/styles";
-import { Container, CssBaseline, Grid, Breadcrumbs, Link, Typography } from "@mui/material";
+import { Container, CssBaseline, Grid, Typography } from "@mui/material";
 import Header from "./Header";
+import { Link } from "react-router-dom";
+import "./Layout.css";
 
 export const DRAWER_WIDTH = 280;
 
@@ -43,14 +45,28 @@ const Layout: React.FC<Props> = ({ children }) => {
           sx={{ display: "flex", flexDirection: "column", flexGrow: 1, width: "100%", height: "100vh" }}
         >
           <DrawerHeader />
-          <Container maxWidth="xl" sx={{ flex: 1, overflow: "auto" }}>
+          <Container className="main-bg" maxWidth="xl" sx={{ flex: 1, overflow: "auto" }}>
             <Box sx={{ p: 2, width: "100%", height: "100%" }}>
               <Header />
               {children}
             </Box>
           </Container>
-          <Box component="footer" sx={{ height: "30px" }}>
-            Footer
+          <Box className="bg-color" component="footer" sx={{ p: 2 }}>
+            <Grid container>
+              <Grid item md={6}>
+                <Typography variant="body1">
+                  All Rights Reserved © DBST 2023.
+                </Typography>
+              </Grid>
+              <Grid item md={6} textAlign={"right"}>
+                <Typography variant="subtitle1">
+                  Designed & Developed: 
+                  <Link to="https://fbsp.co.ir" className="Footer-Link" target="_blank">
+                     FBSP
+                  </Link>
+                </Typography>
+              </Grid>
+            </Grid>
           </Box>
         </Box>
       </Box>

@@ -13,8 +13,11 @@ import { DRAWER_WIDTH, DrawerHeader } from "./Layout";
 import { Link } from "react-router-dom";
 import { Box, Icon, SvgIcon } from "@mui/material";
 import AppsIcon from "@mui/icons-material/Apps";
-import Groups2Icon from "@mui/icons-material/Groups2";
+import GroupAddOutlinedIcon from '@mui/icons-material/GroupAddOutlined';
 import Diversity2Icon from "@mui/icons-material/Diversity2";
+import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
+import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
+import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import "./RightMenu.css";
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -81,6 +84,7 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
             <Link key={menu.title} to={menu.link} className="menu-link" style={{textDecoration: "none", textTransform: "uppercase"}}>
               <ListItem disablePadding sx={{ display: "block" }}>
                 <ListItemButton
+                  className="menu-btn"
                   sx={{
                     minHeight: 48,
                     justifyContent: open ? "initial" : "center",
@@ -98,6 +102,7 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
                     <ShowIcon icon={menu.icon} />
                   </ListItemIcon>
                   <ListItemText
+                    className="menu-text"
                     primary={menu.title}
                     sx={{
                       ml: 1,
@@ -134,8 +139,13 @@ function ShowIcon(props: { icon?: string | React.ReactElement; color?: any }) {
 
 const MENU_ITEMS = [
   {
+    title: "Dasboard",
+    icon: <SpaceDashboardOutlinedIcon />,
+    link: "/",
+  },
+  {
     title: "Users",
-    icon: <Groups2Icon />,
+    icon: <GroupAddOutlinedIcon />,
     link: "users",
   },
   {
@@ -145,7 +155,12 @@ const MENU_ITEMS = [
   },
   {
     title: "Classes",
-    icon: "classes",
+    icon: <ClassOutlinedIcon />,
     link: "classes",
+  },
+  {
+    title: "Registrations",
+    icon: <HowToRegOutlinedIcon />,
+    link: "/",
   },
 ];

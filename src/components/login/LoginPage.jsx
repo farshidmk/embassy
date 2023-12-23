@@ -47,18 +47,15 @@ const LoginPage = () => {
 
   return (
 
-    <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+    <Grid container sx={{backgroundColor: "#edece7"}} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       <Grid item sx={{
         display: "flex",
         justifyContent:"center",
         alignItems:"center",
         flexDirection: "column",
-        background: (theme) => alpha(theme.palette.background.paper, 0.9),
         borderRadius: 1,
-        boxShadow: "0px 0px 8px 0px white",
         pt: 6,
         pb: 7,
-        px: 3,
         overflow: "auto",
       }} className={styles.FullHeight} md={4}>
 
@@ -72,17 +69,15 @@ const LoginPage = () => {
             justifyContent: "space-between",
             alignItems: "center",
             flexDirection: "column",
-            background: (theme) => alpha(theme.palette.background.paper, 0.9),
-            borderRadius: 1,
-            boxShadow: "0px 0px 8px 0px white",
+            backgroundColor: "#edece7",
+            borderRadius: 2,
             pt: 6,
             pb: 7,
-            px: 3,
             overflow: "auto",
           }}
           onSubmitCapture={handleSubmit(onSubmit)}
         >
-          <Box component="img" sx={{ width: "auto", height: "90px" }} src="/assets/images/logo-dark.png" alt="logo" />
+          <Box component="img" sx={{ width: "auto", height: "90px" }} src="/logo192.png" alt="logo" />
 
           <Controller
             control={control}
@@ -93,7 +88,7 @@ const LoginPage = () => {
                 {...field}
                 label="Username"
                 size="medium"
-                sx={{ width: "400px", backgroundColor: "#ffffffbb" }}
+                sx={{ width: "400px",backgroundColor: "#ffffffbb",borderRadius:'50px', }}
                 error={errors.username?.message}
                 helperText={errors.username?.message}
               />
@@ -110,7 +105,7 @@ const LoginPage = () => {
                 type={showPassword ? "text" : "password"}
                 label="Password"
                 size="medium"
-                sx={{ width: "400px", backgroundColor: "#ffffffbb" }}
+                sx={{ width: "400px", backgroundColor: "#ffffffbb",borderRadius:'50px', }}
                 error={errors.password?.message}
                 helperText={errors.password?.message}
                 InputProps={{

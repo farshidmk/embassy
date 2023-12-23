@@ -100,6 +100,12 @@ function App() {
             textTransform: 'uppercase',
             color: '#333',
           },
+          subtitle1: {
+            letterSpacing: '1px',
+            fontSize: '12px',
+            fontWeight: '100',
+            textTransform: 'uppercase',
+          },
         },
         palette: {
           primary: {

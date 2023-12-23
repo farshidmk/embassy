@@ -8,3 +8,7 @@
   background-position: center;
   background-size: cover;
 }
+.main-bg {
+  background-image: url(../../../public/assets/images/main-bg.png);
+  background-size: cover;
+}
