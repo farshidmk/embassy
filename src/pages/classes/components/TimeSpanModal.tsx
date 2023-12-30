@@ -21,7 +21,7 @@ const TimeSpanModal = ({ open, handleClose, timeSpanValue }: Props) => {
       aria-describedby="modal-modal-description"
     >
       <Box sx={style}>
-        <TimeSpan timeSpanValue={timeSpanValue} />
+        <TimeSpan timeSpanValue={timeSpanValue} isModalView />
       </Box>
     </Modal>
   );

@@ -43,11 +43,7 @@ const Classes = (props: Props) => {
         headerName: "Class Time Span",
         flex: 1,
         renderCell: ({ value }) => (
-          <Box
-            component="div"
-            onClick={() => setSelectedTimeSpan(value)}
-            // onMouseLeave={() => setSelectedTimeSpan(undefined)}
-          >
+          <Box component="div" onClick={() => setSelectedTimeSpan(value)} sx={{ cursor: "pointer" }}>
             view time span
           </Box>
         ),
