@@ -15,4 +15,7 @@ export const TIME_SPANS = [
 export const DAYS_OF_WEEK = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"] as const;
 
 export type TDaysOfWeek = (typeof DAYS_OF_WEEK)[number];
-//TODO: add type for timeSpanValue object
+
+export type PERIODS = (typeof TIME_SPANS)[number]["label"];
+
+export type ITimeSpan = Record<(typeof DAYS_OF_WEEK)[number], PERIODS[]>;

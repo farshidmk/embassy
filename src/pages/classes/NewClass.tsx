@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import { IClasses } from "types/classes";
 import TimeSpan from "components/timeSpan/TimeSpan";
+import { ITimeSpan, PERIODS, TDaysOfWeek } from "types/timeSpan";
 
 type Props = {};
 
@@ -18,7 +19,7 @@ const NewClass = (props: Props) => {
   const Auth = useAuth();
   const snackbar = useSnackbar();
   const navigate = useNavigate();
-  const [timeSpan, setTimeSpan] = useState(DEFAULT_TIME_SPAN);
+  const [timeSpan, setTimeSpan] = useState<ITimeSpan>(DEFAULT_TIME_SPAN);
 
   const queryClient = useQueryClient();
   const { isLoading, mutate } = useMutation({
@@ -79,9 +80,7 @@ const NewClass = (props: Props) => {
         </Grid>
         <TimeSpan
           timeSpanValue={timeSpan}
-          onChange={(day: any, period: any) => {
-            //TODO: fix type error
-            //@ts-ignore
+          onChange={(day: TDaysOfWeek, period: PERIODS) => {
             let newPeriod = [...timeSpan[day]];
             const index = newPeriod?.indexOf(period);
             if (index > -1) {
@@ -103,8 +102,7 @@ export default NewClass;
 
 const CLASS_ITEMS: IRenderFormInput[] = [{ name: "class_name", inputType: "text", label: "Class Name" }];
 
-//TODO: add type
-const DEFAULT_TIME_SPAN = {
+const DEFAULT_TIME_SPAN: ITimeSpan = {
   Sun: [],
   Mon: [],
   Tue: [],

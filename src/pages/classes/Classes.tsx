@@ -9,14 +9,13 @@ import { useAuth } from "hooks/useAuth";
 import React, { useMemo, useState } from "react";
 import { IClasses } from "types/classes";
 import TimeSpanModal from "./components/TimeSpanModal";
-import TimeSpan from "components/timeSpan/TimeSpan";
+import { ITimeSpan } from "types/timeSpan";
 
 type Props = {};
 
 const Classes = (props: Props) => {
   const Auth = useAuth();
-  //TODO: fix time span value type
-  const [selectedTimeSpan, setSelectedTimeSpan] = useState<any>();
+  const [selectedTimeSpan, setSelectedTimeSpan] = useState<ITimeSpan | undefined>(undefined);
 
   const columns = useMemo(
     (): GridColDef<IClasses>[] => [

@@ -32,7 +32,7 @@ const Users = () => {
       {
         field: "gender",
         headerName: "Gender",
-        flex: 1,
+        flex: 0.6,
         renderCell: ({ value }) => {
           return <RenderGender gender={value} />;
         },
