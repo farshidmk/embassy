@@ -10,7 +10,7 @@ import { useSnackbar } from "hooks/useSnackbar";
 import { useNavigate } from "react-router-dom";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import { IClasses } from "types/classes";
-import TimeSpan from "components/timeSpan/TimeSpan";
+import TimeSpan, { DEFAULT_TIME_SPAN } from "components/timeSpan/TimeSpan";
 import { ITimeSpan, PERIODS, TDaysOfWeek } from "types/timeSpan";
 
 type Props = {};
@@ -101,13 +101,3 @@ const NewClass = (props: Props) => {
 export default NewClass;
 
 const CLASS_ITEMS: IRenderFormInput[] = [{ name: "class_name", inputType: "text", label: "Class Name" }];
-
-const DEFAULT_TIME_SPAN: ITimeSpan = {
-  Sun: [],
-  Mon: [],
-  Tue: [],
-  Wed: [],
-  Thu: [],
-  Fri: [],
-  Sat: [],
-};

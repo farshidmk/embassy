@@ -17,6 +17,7 @@ import ErrorHandler from "components/errorHandler/ErrorHandler";
 import React from "react";
 import { IRenderFormInput, TOption } from "types/render";
 import PasswordInput from "./PasswordInput";
+import CustomDatePicker from "./datePicker/CustomDatePicker";
 
 const RenderFormInput: React.FC<IRenderFormInput> = (props) => {
   const { name, label, errors, elementProps, controllerField } = props;
@@ -96,7 +97,20 @@ const RenderFormInput: React.FC<IRenderFormInput> = (props) => {
       </FormControl>
     );
   }
-
+  if (props.inputType === "date") {
+    const { setValue, watch } = props;
+    return (
+      <CustomDatePicker
+        name={name}
+        label={label}
+        setDay={(day) => setValue(name, day)}
+        value={watch(name)}
+        {...elementProps}
+        {...controllerField}
+        error={errors?.[name]?.message}
+      />
+    );
+  }
   if (props.inputType === "checkbox") {
     const { setValue, disabled = false } = elementProps;
     return (
