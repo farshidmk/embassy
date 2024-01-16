@@ -12,7 +12,8 @@ import ErrorAlert from "components/Alert/ErrorAlert";
 import { IClasses } from "types/classes";
 import TimeSpan, { DEFAULT_TIME_SPAN } from "components/timeSpan/TimeSpan";
 import { ITimeSpan, PERIODS, TDaysOfWeek } from "types/timeSpan";
-
+import Typography from '@mui/material/Typography';
+import "./NewClass.css";
 type Props = {};
 
 const NewClass = (props: Props) => {
@@ -62,37 +63,45 @@ const NewClass = (props: Props) => {
 
   return (
     <>
-      <Box component="form" onSubmit={handleSubmit(onSubmitHandler)}>
-        <Grid container spacing={2}>
-          {CLASS_ITEMS.map((item) => (
-            <Grid item key={item.name} xs={12} md={3}>
-              <Controller
-                name={item.name as keyof IClasses}
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <RenderFormInput controllerField={field} label={item.label} errors={errors} {...item} {...field} />
-                  );
-                }}
-              />
-            </Grid>
-          ))}
-        </Grid>
-        <TimeSpan
-          timeSpanValue={timeSpan}
-          onChange={(day: TDaysOfWeek, period: PERIODS) => {
-            let newPeriod = [...timeSpan[day]];
-            const index = newPeriod?.indexOf(period);
-            if (index > -1) {
-              newPeriod.splice(index, 1);
-            } else {
-              newPeriod.push(period);
-            }
-            setTimeSpan((p) => ({ ...p, [day]: [...newPeriod] }));
-          }}
-        />
-        {error && <ErrorAlert text={error} />}
-        <FormButtons onBack={onBack} onSave={handleSubmit(onSubmitHandler)} isLoading={isLoading} />
+      <Box component="section" className="form-holder">
+        <Typography variant="h5" component="h5" sx={{ mb: 1 }}>
+          How to?
+        </Typography>
+        <Typography variant="body1" component="p" sx={{ mb: 1 }}>
+        To create a new class, you only need to select the name of the class as well as the information related to their schedule through the displayed table. After creating a new class, you can assign the created clubs to this class. 
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit(onSubmitHandler)}>
+          <Grid container spacing={2}>
+            {CLASS_ITEMS.map((item) => (
+              <Grid item key={item.name} xs={12} md={3}>
+                <Controller
+                  name={item.name as keyof IClasses}
+                  control={control}
+                  render={({ field }) => {
+                    return (
+                      <RenderFormInput controllerField={field} label={item.label} errors={errors} {...item} {...field} />
+                    );
+                  }}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <TimeSpan
+            timeSpanValue={timeSpan}
+            onChange={(day: TDaysOfWeek, period: PERIODS) => {
+              let newPeriod = [...timeSpan[day]];
+              const index = newPeriod?.indexOf(period);
+              if (index > -1) {
+                newPeriod.splice(index, 1);
+              } else {
+                newPeriod.push(period);
+              }
+              setTimeSpan((p) => ({ ...p, [day]: [...newPeriod] }));
+            }}
+          />
+          {error && <ErrorAlert text={error} />}
+          <FormButtons onBack={onBack} onSave={handleSubmit(onSubmitHandler)} isLoading={isLoading} />
+        </Box>
       </Box>
     </>
   );

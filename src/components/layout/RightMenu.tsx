@@ -18,6 +18,8 @@ import ClassOutlinedIcon from '@mui/icons-material/ClassOutlined';
 import SpaceDashboardOutlinedIcon from '@mui/icons-material/SpaceDashboardOutlined';
 import HowToRegOutlinedIcon from '@mui/icons-material/HowToRegOutlined';
 import ExtensionOutlinedIcon from '@mui/icons-material/ExtensionOutlined';
+import PermContactCalendarOutlinedIcon from '@mui/icons-material/PermContactCalendarOutlined';
+import PlaylistAddCheckOutlinedIcon from '@mui/icons-material/PlaylistAddCheckOutlined';
 import "./RightMenu.css";
 
 const openedMixin = (theme: Theme): CSSObject => ({
@@ -96,7 +98,6 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
                     className="menu-icon"
                     sx={{
                       minWidth: 0,
-                      backgroundColor: 'transparent',
                       mr: open ? 3 : "auto",
                       justifyContent: "center",
                     }}
@@ -108,11 +109,9 @@ const RightMenu: React.FC<Props> = ({ open, handleDrawerClose }) => {
                     primary={menu.title}
                     sx={{
                       ml: 1,
-                      backgroundColor: 'transparent',
                       opacity: open ? 1 : 0,
                       fontSize: open ? "1rem" : "8px",
                       textWrap: open ? "wrap" : "no-wrap",
-                      color: (theme) => theme.palette.secondary.main,
                     }}
                   />
                 </ListItemButton>
@@ -163,6 +162,21 @@ const MENU_ITEMS = [
   {
     title: "Registrations",
     icon: <HowToRegOutlinedIcon />,
+    link: "/",
+  },
+  {
+    title: "Clubs",
+    icon: <ExtensionOutlinedIcon />,
+    link: "/",
+  },
+  {
+    title: "Membership list",
+    icon: <PlaylistAddCheckOutlinedIcon />,
+    link: "/",
+  },
+  {
+    title: "Profile",
+    icon: <PermContactCalendarOutlinedIcon />,
     link: "/",
   },
 ];

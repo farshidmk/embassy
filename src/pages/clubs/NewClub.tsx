@@ -14,7 +14,8 @@ import { IUser } from "types/user";
 import { IClasses } from "types/classes";
 import TimeSpan, { DEFAULT_TIME_SPAN } from "components/timeSpan/TimeSpan";
 import { ITimeSpan, PERIODS, TDaysOfWeek } from "types/timeSpan";
-
+import Typography from '@mui/material/Typography';
+import "./NewClub.css";
 type Props = {};
 
 const NewClub = (props: Props) => {
@@ -115,7 +116,7 @@ const NewClub = (props: Props) => {
       {
         name: "right_class",
         inputType: "select",
-        label: "Right Class",
+        label: "Related class",
         options: classes,
         status: classesStatus,
         refetch: classesRefetch,
@@ -127,37 +128,45 @@ const NewClub = (props: Props) => {
 
   return (
     <>
-      <Box component="form" onSubmit={handleSubmit(onSubmitHandler)}>
-        <Grid container spacing={2} sx={{ mb: 2 }}>
-          {CLUB_ITEMS.map((item) => (
-            <Grid item key={item.name} xs={12} md={3}>
-              <Controller
-                name={item.name as keyof IClub}
-                control={control}
-                render={({ field }) => {
-                  return (
-                    <RenderFormInput controllerField={field} label={item.label} errors={errors} {...item} {...field} />
-                  );
-                }}
-              />
-            </Grid>
-          ))}
-        </Grid>
-        <TimeSpan
-          timeSpanValue={timeSpan}
-          onChange={(day: TDaysOfWeek, period: PERIODS) => {
-            let newPeriod = [...timeSpan[day]];
-            const index = newPeriod?.indexOf(period);
-            if (index > -1) {
-              newPeriod.splice(index, 1);
-            } else {
-              newPeriod.push(period);
-            }
-            setTimeSpan((p) => ({ ...p, [day]: [...newPeriod] }));
-          }}
-        />
-        {error && <ErrorAlert text={error} />}
-        <FormButtons onBack={onBack} onSave={handleSubmit(onSubmitHandler)} isLoading={isLoading} />
+      <Box component="section" className="form-holder">
+        <Typography variant="h5" component="h5" sx={{ mb: 1 }}>
+          How to?
+        </Typography>
+        <Typography variant="body1" component="p" sx={{ mb: 1 }}>
+        Note that before creating the club, you must have defined the classes and after entering the relevant information according to the class schedule, specify the running times of the club.
+        </Typography>
+        <Box component="form" onSubmit={handleSubmit(onSubmitHandler)}>
+          <Grid container spacing={2} sx={{ mb: 2 }}>
+            {CLUB_ITEMS.map((item) => (
+              <Grid item key={item.name} xs={12} md={3}>
+                <Controller
+                  name={item.name as keyof IClub}
+                  control={control}
+                  render={({ field }) => {
+                    return (
+                      <RenderFormInput controllerField={field} label={item.label} errors={errors} {...item} {...field} />
+                    );
+                  }}
+                />
+              </Grid>
+            ))}
+          </Grid>
+          <TimeSpan
+            timeSpanValue={timeSpan}
+            onChange={(day: TDaysOfWeek, period: PERIODS) => {
+              let newPeriod = [...timeSpan[day]];
+              const index = newPeriod?.indexOf(period);
+              if (index > -1) {
+                newPeriod.splice(index, 1);
+              } else {
+                newPeriod.push(period);
+              }
+              setTimeSpan((p) => ({ ...p, [day]: [...newPeriod] }));
+            }}
+          />
+          {error && <ErrorAlert text={error} />}
+          <FormButtons onBack={onBack} onSave={handleSubmit(onSubmitHandler)} isLoading={isLoading} />
+        </Box>
       </Box>
     </>
   );

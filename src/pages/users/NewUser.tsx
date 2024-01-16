@@ -12,6 +12,8 @@ import { useNavigate } from "react-router-dom";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import { ROLE_SELECT } from "const/Roles";
 import { GENDER_SELECT } from "const/Genders";
+import Typography from '@mui/material/Typography';
+import "./NewUser.css";
 
 type Props = {};
 
@@ -92,10 +94,17 @@ const NewUser = (props: Props) => {
 
   return (
     <>
+    <Box component="section" className="form-holder">
+    <Typography variant="h5" component="h5" sx={{mb: 2}}>
+      How to?
+    </Typography>
+    <Typography variant="body1" component="p" sx={{mb: 5}}>
+    To create a new user in the system, enter their information in the form below, and if the type of user created is "student", you must select the parents' information from the relevant box.
+    </Typography>
       <Box component="form" onSubmit={handleSubmit(onSubmitHandler)}>
         <Grid container spacing={2}>
           {USER_ITEM.map((item) => (
-            <Grid item key={item.name} xs={12} md={3}>
+            <Grid item key={item.name} xs={12} md={4}>
               <Controller
                 name={item.name as keyof IUser}
                 control={control}
@@ -110,6 +119,7 @@ const NewUser = (props: Props) => {
         </Grid>
         {error && <ErrorAlert text={error} />}
         <FormButtons onBack={onBack} onSave={handleSubmit(onSubmitHandler)} isLoading={isLoading} />
+      </Box>
       </Box>
     </>
   );
