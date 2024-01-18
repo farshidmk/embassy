@@ -9,10 +9,10 @@ import NotFound from "components/errorPages/notFound/NotFound";
 import Profile from "components/profile/Profile";
 import Classes from "pages/classes/Classes";
 import Users from "pages/users/Users";
-import NewUser from "pages/users/NewUser";
+import CrudUser from "pages/users/CrudUser";
 import Clubs from "pages/clubs/Clubs";
-import NewClub from "pages/clubs/NewClub";
-import NewClass from "pages/classes/NewClass";
+import CrudClub from "pages/clubs/CrudClub";
+import CrudClass from "pages/classes/CrudClass";
 
 const AppRoutes: React.FC = () => {
   return (
@@ -20,15 +20,18 @@ const AppRoutes: React.FC = () => {
       <Route element={<ProtectedRoute />}>
         <Route path="/classes">
           <Route index element={<Classes />} />
-          <Route path="new" element={<NewClass />} />
+          <Route path=":classId" element={<CrudClass />} />
+          <Route path="new" element={<CrudClass />} />
         </Route>
         <Route path="/users">
           <Route index element={<Users />} />
-          <Route path="new" element={<NewUser />} />
+          <Route path="new" element={<CrudUser />} />
+          <Route path=":userId" element={<CrudUser />} />
         </Route>
         <Route path="/clubs">
           <Route index element={<Clubs />} />
-          <Route path="new" element={<NewClub />} />
+          <Route path="new" element={<CrudClub />} />
+          <Route path=":clubId" element={<CrudClub />} />
         </Route>
         <Route path="/" element={<Navigate to="/dashboard" />} />
         <Route path="dashboard" index element={<Dashboard />} />

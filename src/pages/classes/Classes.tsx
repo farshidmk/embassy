@@ -10,6 +10,7 @@ import React, { useMemo, useState } from "react";
 import { IClasses } from "types/classes";
 import TimeSpanModal from "./components/TimeSpanModal";
 import { ITimeSpan } from "types/timeSpan";
+import { ACTION_COLUMN, TableDeleteEditAction } from "components/table/TableActions";
 
 type Props = {};
 
@@ -45,6 +46,12 @@ const Classes = (props: Props) => {
           <Box component="div" onClick={() => setSelectedTimeSpan(value)} sx={{ cursor: "pointer" }}>
             view time span
           </Box>
+        ),
+      },
+      {
+        ...ACTION_COLUMN,
+        renderCell: ({ row }) => (
+          <TableDeleteEditAction deleteApi={`/class/${row.uid}`} id={row.uid} itemName={row.class_name} />
         ),
       },
     ],

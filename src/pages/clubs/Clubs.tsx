@@ -11,6 +11,7 @@ import TimeSpanModal from "pages/classes/components/TimeSpanModal";
 import React, { useMemo, useState } from "react";
 import { IClub } from "types/club";
 import { ITimeSpan } from "types/timeSpan";
+import { ACTION_COLUMN, TableDeleteEditAction } from "components/table/TableActions";
 
 const Clubs = () => {
   const Auth = useAuth();
@@ -71,6 +72,12 @@ const Clubs = () => {
         headerName: "Right Class",
         flex: 1,
         renderCell: ({ value }) => <ShowClass classId={value} />,
+      },
+      {
+        ...ACTION_COLUMN,
+        renderCell: ({ row }) => (
+          <TableDeleteEditAction deleteApi={`/club/${row.uid}`} id={row.uid} itemName={row.title} />
+        ),
       },
     ],
     []

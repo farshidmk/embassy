@@ -6,10 +6,11 @@ import CustomDataGrid from "components/dataGrid/CustomDataGrid";
 import ErrorHandler from "components/errorHandler/ErrorHandler";
 import RenderGender from "components/render/renderGender/RenderGender";
 import RenderRole from "components/render/renderRole/RenderRole";
-// import ShowUser from "components/render/showUser/ShowUser";
 import { useAuth } from "hooks/useAuth";
 import React, { useMemo } from "react";
 import { ILoggedInUser } from "types/user";
+// import ShowUser from "components/render/showUser/ShowUser";
+import { ACTION_COLUMN, TableDeleteEditAction } from "components/table/TableActions";
 
 const Users = () => {
   const Auth = useAuth();
@@ -47,6 +48,16 @@ const Users = () => {
         },
       },
       { field: "parent", headerName: "Parent", flex: 1 },
+      {
+        ...ACTION_COLUMN,
+        renderCell: ({ row }) => (
+          <TableDeleteEditAction
+            deleteApi={`/user/${row.uid}`}
+            id={row.uid}
+            itemName={row.first_name + " " + row.last_name}
+          />
+        ),
+      },
     ],
     []
   );

@@ -7,22 +7,25 @@ import { Controller, useForm } from "react-hook-form";
 import { useAuth } from "hooks/useAuth";
 import { useSnackbar } from "hooks/useSnackbar";
 import React, { useMemo, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { IRenderFormInput } from "types/render";
 import { IClub } from "types/club";
 import { IUser } from "types/user";
 import { IClasses } from "types/classes";
 import TimeSpan, { DEFAULT_TIME_SPAN } from "components/timeSpan/TimeSpan";
 import { ITimeSpan, PERIODS, TDaysOfWeek } from "types/timeSpan";
-import Typography from '@mui/material/Typography';
+import Typography from "@mui/material/Typography";
 import "./NewClub.css";
+import { TCrudType } from "types/types";
 type Props = {};
 
-const NewClub = (props: Props) => {
+const CrudClub = (props: Props) => {
   const Auth = useAuth();
+  const { clubId } = useParams();
   const snackbar = useSnackbar();
   const navigate = useNavigate();
   const queryClient = useQueryClient();
+  const mode: TCrudType = !clubId ? "CREATE" : "EDIT";
 
   const [timeSpan, setTimeSpan] = useState<ITimeSpan>(DEFAULT_TIME_SPAN);
 
@@ -133,7 +136,8 @@ const NewClub = (props: Props) => {
           How to?
         </Typography>
         <Typography variant="body1" component="p" sx={{ mb: 1 }}>
-        Note that before creating the club, you must have defined the classes and after entering the relevant information according to the class schedule, specify the running times of the club.
+          Note that before creating the club, you must have defined the classes and after entering the relevant
+          information according to the class schedule, specify the running times of the club.
         </Typography>
         <Box component="form" onSubmit={handleSubmit(onSubmitHandler)}>
           <Grid container spacing={2} sx={{ mb: 2 }}>
@@ -144,7 +148,13 @@ const NewClub = (props: Props) => {
                   control={control}
                   render={({ field }) => {
                     return (
-                      <RenderFormInput controllerField={field} label={item.label} errors={errors} {...item} {...field} />
+                      <RenderFormInput
+                        controllerField={field}
+                        label={item.label}
+                        errors={errors}
+                        {...item}
+                        {...field}
+                      />
                     );
                   }}
                 />
@@ -172,4 +182,4 @@ const NewClub = (props: Props) => {
   );
 };
 
-export default NewClub;
+export default CrudClub;
