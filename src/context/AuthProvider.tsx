@@ -34,7 +34,7 @@ const AuthProvider: React.FC<Props> = ({ children }) => {
     setUserInfo("{}");
   }
 
-  const serverCall = async ({ entity, method, data = { test: 1 } }: TServerCall) => {
+  const serverCall = async ({ entity, method, data }: TServerCall) => {
     try {
       let requestOptions = {
         url: entity,

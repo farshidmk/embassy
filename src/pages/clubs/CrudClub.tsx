@@ -6,7 +6,7 @@ import RenderFormInput from "components/render/formInputs/RenderFormInput";
 import { Controller, useForm } from "react-hook-form";
 import { useAuth } from "hooks/useAuth";
 import { useSnackbar } from "hooks/useSnackbar";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { IRenderFormInput } from "types/render";
 import { IClub } from "types/club";
@@ -29,6 +29,7 @@ const CrudClub = (props: Props) => {
   const mode: TCrudType = !clubId ? "CREATE" : "EDIT";
 
   const [timeSpan, setTimeSpan] = useState<ITimeSpan>(DEFAULT_TIME_SPAN);
+  const [reservedTimeSpan, useSetReservedTimeSpan] = useState<ITimeSpan | undefined>(undefined);
 
   const {
     data: teachers,
@@ -66,6 +67,19 @@ const CrudClub = (props: Props) => {
     watch,
     setValue,
   } = useForm<IClub>();
+
+  const {
+    data: reserved,
+    status: reservedStatus,
+    refetch: reservedRefetch,
+  } = useQuery({
+    queryKey: [`/class/${watch("right_class")}`],
+    queryFn: Auth?.getRequest,
+    select: (rClass: IClasses): ITimeSpan => {
+      return rClass.class_time_span;
+    },
+    enabled: !!watch("right_class"),
+  });
 
   function onBack() {
     navigate("/clubs");
@@ -192,6 +206,8 @@ const CrudClub = (props: Props) => {
               }
               setTimeSpan((p) => ({ ...p, [day]: [...newPeriod] }));
             }}
+            reservedTimeSpan={reserved}
+            disabled={!reserved}
           />
           {error && <ErrorAlert text={error} />}
           <FormButtons onBack={onBack} onSave={handleSubmit(onSubmitHandler)} isLoading={isLoading} />

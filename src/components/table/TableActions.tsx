@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import DeleteDialog from "./DeleteDialog";
 import { useAuth } from "hooks/useAuth";
 import { useMutation } from "@tanstack/react-query";
+import { useSnackbar } from "hooks/useSnackbar";
 
 type Props = {
   onEdit?: (record: any) => void;
@@ -46,6 +47,7 @@ type TableProps = {
 
 export const TableDeleteEditAction: React.FC<TableProps> = ({ deleteApi, id, itemName }) => {
   const Auth = useAuth();
+  const snackbar = useSnackbar();
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const navigate = useNavigate();
 
@@ -59,10 +61,21 @@ export const TableDeleteEditAction: React.FC<TableProps> = ({ deleteApi, id, ite
         open={showDeleteModal}
         message={`Are you sure to delete ${itemName ?? ""}?`}
         handleDelete={() =>
-          mutate({
-            method: "delete",
-            entity: deleteApi,
-          })
+          mutate(
+            {
+              method: "delete",
+              entity: deleteApi,
+            },
+            {
+              onSuccess: () => {
+                snackbar("Item Deleted", "success");
+                setShowDeleteModal(false);
+              },
+              onError: () => {
+                snackbar("Error on Deleting Item", "error");
+              },
+            }
+          )
         }
         title={"Delete Item"}
         isLoading={isLoading}

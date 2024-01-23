@@ -14,6 +14,7 @@ import TimeSpan, { DEFAULT_TIME_SPAN } from "components/timeSpan/TimeSpan";
 import { ITimeSpan, PERIODS, TDaysOfWeek } from "types/timeSpan";
 import { TCrudType } from "types/types";
 import ErrorHandler from "components/errorHandler/ErrorHandler";
+import AddStudent from "./components/AddStudent";
 
 type Props = {};
 
@@ -24,6 +25,7 @@ const CrudClass = (props: Props) => {
   const snackbar = useSnackbar();
   const navigate = useNavigate();
   const [timeSpan, setTimeSpan] = useState<ITimeSpan>(DEFAULT_TIME_SPAN);
+  const [selectedStudent, setSelectedStudent] = useState<string[]>([]);
 
   const queryClient = useQueryClient();
   const { isLoading, mutate } = useMutation({
@@ -115,6 +117,7 @@ const CrudClass = (props: Props) => {
             setTimeSpan((p) => ({ ...p, [day]: [...newPeriod] }));
           }}
         />
+        <AddStudent selectedStudent={selectedStudent} setSelectedStudent={setSelectedStudent} />
         {error && <ErrorAlert text={error} />}
         <FormButtons onBack={onBack} onSave={handleSubmit(onSubmitHandler)} isLoading={isLoading} />
       </Box>

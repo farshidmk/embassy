@@ -4,13 +4,23 @@ import { DAYS_OF_WEEK, ITimeSpan, PERIODS, TDaysOfWeek, TIME_SPANS } from "types
 import CropFreeOutlinedIcon from "@mui/icons-material/CropFreeOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import "./TimeSpan.module.css";
+import DoDisturbOnIcon from "@mui/icons-material/DoDisturbOn";
+
 type Props = {
-  timeSpanValue?: any;
+  timeSpanValue?: ITimeSpan;
   onChange?: (day: TDaysOfWeek, period: any) => void;
   isModalView?: boolean;
+  disabled?: boolean;
+  reservedTimeSpan?: ITimeSpan;
 };
 
-const TimeSpan = ({ timeSpanValue = {}, onChange, isModalView = false }: Props) => {
+const TimeSpan = ({
+  timeSpanValue = DEFAULT_TIME_SPAN,
+  onChange,
+  isModalView = false,
+  disabled = false,
+  reservedTimeSpan,
+}: Props) => {
   return (
     <Box component="table" className={`time-span-table ${isModalView ? "modal-view" : ""}`}>
       <Box component="thead">
@@ -38,19 +48,31 @@ const TimeSpan = ({ timeSpanValue = {}, onChange, isModalView = false }: Props) 
         {DAYS_OF_WEEK.map((day) => (
           <Box component="tr" key={day}>
             <Box component="td">{day}</Box>
-            {TIME_SPANS.map((time) => (
-              <Box
-                key={day + time.label}
-                component="td"
-                onClick={() => {
-                  if (isModalView) return false;
-                  //@ts-ignore
-                  onChange(day, time.label);
-                }}
-              >
-                <ShowDay day={day} period={time.label} timeSpanValue={timeSpanValue} />
-              </Box>
-            ))}
+            {TIME_SPANS.map((time) => {
+              const IS_RESERVED = reservedTimeSpan?.[day]
+                ?.map((p) => p.toLocaleUpperCase())
+                ?.includes(time.label?.toLocaleUpperCase());
+
+              return (
+                <Box
+                  key={day + time.label}
+                  component="td"
+                  onClick={() => {
+                    if (isModalView || disabled || IS_RESERVED) return false;
+                    //@ts-ignore
+                    onChange(day, time.label);
+                  }}
+                  sx={{ cursor: IS_RESERVED ? "not-allowed" : disabled || isModalView ? "default" : "pointer" }}
+                >
+                  <ShowDay
+                    day={day}
+                    period={time.label}
+                    timeSpanValue={timeSpanValue}
+                    reservedTimeSpan={reservedTimeSpan}
+                  />
+                </Box>
+              );
+            })}
           </Box>
         ))}
       </Box>
@@ -60,11 +82,29 @@ const TimeSpan = ({ timeSpanValue = {}, onChange, isModalView = false }: Props) 
 
 export default TimeSpan;
 
-const ShowDay = ({ day, period, timeSpanValue }: { day: TDaysOfWeek; period: PERIODS; timeSpanValue: ITimeSpan }) => {
+const ShowDay = ({
+  day,
+  period,
+  timeSpanValue,
+  reservedTimeSpan,
+}: {
+  day: TDaysOfWeek;
+  period: PERIODS;
+  timeSpanValue: ITimeSpan;
+  reservedTimeSpan?: ITimeSpan;
+}) => {
+  const IS_RESERVED = reservedTimeSpan?.[day]?.map((p) => p.toLocaleUpperCase())?.includes(period?.toLocaleUpperCase());
   const IS_FULL = timeSpanValue?.[day]?.map((p) => p.toLocaleUpperCase())?.includes(period?.toLocaleUpperCase());
+
   return (
     <Box sx={{ height: "100%", width: "100%" }}>
-      {IS_FULL ? <TaskAltOutlinedIcon sx={{ color: "#285b45" }} /> : <CropFreeOutlinedIcon sx={{ color: "#eeb601" }} />}
+      {IS_RESERVED ? (
+        <DoDisturbOnIcon color="warning" />
+      ) : IS_FULL ? (
+        <TaskAltOutlinedIcon sx={{ color: "#285b45" }} />
+      ) : (
+        <CropFreeOutlinedIcon sx={{ color: "#eeb601" }} />
+      )}
     </Box>
   );
 };
