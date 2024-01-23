@@ -31,7 +31,11 @@ const Header = (props: Props) => {
     >
       <Grid item md={6}>
         <Typography variant="h5" color="text.primary">
-          {title === "new" ? "Create " + paths[paths.length - 2] : title}
+          {title === "new"
+            ? "Create " + paths[paths.length - 2]
+            : title?.length > 12
+            ? "Edit " + paths[paths.length - 2]?.slice(0, -1)
+            : title}
         </Typography>
       </Grid>
       {location?.pathname !== "/dashboard" && (
@@ -47,7 +51,7 @@ const Header = (props: Props) => {
             </Link>
             {crumbs.map((crumb) => (
               <Link className="Breadcrumbs-Nav" key={crumb.link} to={`${crumb.link}`}>
-                {crumb.label}
+                {crumb.label.length > 12 ? "EDIT" : crumb.label}
               </Link>
             ))}
           </Breadcrumbs>

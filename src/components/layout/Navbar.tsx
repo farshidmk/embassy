@@ -95,7 +95,7 @@ const Navbar: React.FC<Props> = ({ open, handleDrawerOpen }) => {
         position="fixed"
         open={open}
         sx={{
-          background: '#edece7',
+          background: "#edece7",
           boxShadow: "none",
           borderBottom: "1px solid rgba(0, 0, 0, 0.12)",
           color: (theme) => theme.palette.primary.main,
@@ -134,7 +134,6 @@ const Navbar: React.FC<Props> = ({ open, handleDrawerOpen }) => {
             <Typography variant="body2" color="inherit" fontWeight={600}>
               {`${Auth?.userInfo?.first_name} ${Auth?.userInfo?.last_name}`}
             </Typography>
-
           </Box>
         </Toolbar>
       </AppBar>

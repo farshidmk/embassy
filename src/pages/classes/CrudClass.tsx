@@ -1,11 +1,11 @@
-import React, { useMemo, useState } from "react";
-import { Box, Grid } from "@mui/material";
+import React, { useState } from "react";
+import { Box, Grid, Skeleton } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { IRenderFormInput } from "types/render";
 import FormButtons from "components/render/buttons/FormButtons";
 import RenderFormInput from "components/render/formInputs/RenderFormInput";
 import { useAuth } from "hooks/useAuth";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useSnackbar } from "hooks/useSnackbar";
 import { useNavigate, useParams } from "react-router-dom";
 import ErrorAlert from "components/Alert/ErrorAlert";
@@ -13,6 +13,7 @@ import { IClasses } from "types/classes";
 import TimeSpan, { DEFAULT_TIME_SPAN } from "components/timeSpan/TimeSpan";
 import { ITimeSpan, PERIODS, TDaysOfWeek } from "types/timeSpan";
 import { TCrudType } from "types/types";
+import ErrorHandler from "components/errorHandler/ErrorHandler";
 
 type Props = {};
 
@@ -33,18 +34,31 @@ const CrudClass = (props: Props) => {
     handleSubmit,
     formState: { errors },
     control,
+    setValue,
   } = useForm<IClasses>();
 
   function onBack() {
     navigate("/classes");
   }
 
+  const { status: classStatus, refetch: classRefetch } = useQuery({
+    queryKey: [`class/${classId}`],
+    queryFn: Auth?.getRequest,
+    enabled: !!classId,
+    onSuccess: (res: IClasses) => {
+      Object.entries(res).forEach(([key, value]) => {
+        setValue(key as keyof IClasses, value);
+      });
+      setTimeSpan(res.class_time_span as ITimeSpan);
+    },
+  });
+
   const onSubmitHandler = (data: IClasses) => {
     setError("");
     mutate(
       {
-        entity: "classes/",
-        method: "post",
+        entity: mode === "EDIT" ? `class/${mode === "EDIT" ? classId : ""}` : `classes/`,
+        method: mode === "EDIT" ? "put" : "post",
         data: {
           ...data,
           class_time_span: timeSpan,
@@ -62,6 +76,13 @@ const CrudClass = (props: Props) => {
       }
     );
   };
+
+  if (mode === "EDIT" && classStatus === "loading") {
+    return <Skeleton height={400} />;
+  }
+  if (mode === "EDIT" && classStatus === "error") {
+    return <ErrorHandler onRefetch={classRefetch} errorText="Error On Fetching Class Info" />;
+  }
 
   return (
     <>

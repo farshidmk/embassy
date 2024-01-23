@@ -90,7 +90,7 @@ const CrudUser = (props: Props) => {
     setError("");
     mutate(
       {
-        entity: "users/",
+        entity: `users/${mode === "EDIT" ? userId : ""}`,
         method: mode === "EDIT" ? "put" : "post",
         data,
       },

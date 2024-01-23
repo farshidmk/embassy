@@ -1,6 +1,6 @@
 import { Box, Typography } from "@mui/material";
 import React from "react";
-import { DAYS_OF_WEEK, ITimeSpan, TDaysOfWeek, TIME_SPANS } from "types/timeSpan";
+import { DAYS_OF_WEEK, ITimeSpan, PERIODS, TDaysOfWeek, TIME_SPANS } from "types/timeSpan";
 import CropFreeOutlinedIcon from "@mui/icons-material/CropFreeOutlined";
 import TaskAltOutlinedIcon from "@mui/icons-material/TaskAltOutlined";
 import "./TimeSpan.module.css";
@@ -60,8 +60,8 @@ const TimeSpan = ({ timeSpanValue = {}, onChange, isModalView = false }: Props) 
 
 export default TimeSpan;
 
-const ShowDay = ({ day, period, timeSpanValue }: { day: TDaysOfWeek; period: any; timeSpanValue: any }) => {
-  const IS_FULL = timeSpanValue?.[day]?.includes(period);
+const ShowDay = ({ day, period, timeSpanValue }: { day: TDaysOfWeek; period: PERIODS; timeSpanValue: ITimeSpan }) => {
+  const IS_FULL = timeSpanValue?.[day]?.map((p) => p.toLocaleUpperCase())?.includes(period?.toLocaleUpperCase());
   return (
     <Box sx={{ height: "100%", width: "100%" }}>
       {IS_FULL ? <TaskAltOutlinedIcon sx={{ color: "#285b45" }} /> : <CropFreeOutlinedIcon sx={{ color: "#eeb601" }} />}

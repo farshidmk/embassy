@@ -1,4 +1,4 @@
-import { Box, Grid } from "@mui/material";
+import { Box, Grid, Skeleton } from "@mui/material";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ErrorAlert from "components/Alert/ErrorAlert";
 import FormButtons from "components/render/buttons/FormButtons";
@@ -17,6 +17,7 @@ import { ITimeSpan, PERIODS, TDaysOfWeek } from "types/timeSpan";
 import Typography from "@mui/material/Typography";
 import "./NewClub.css";
 import { TCrudType } from "types/types";
+import ErrorHandler from "components/errorHandler/ErrorHandler";
 type Props = {};
 
 const CrudClub = (props: Props) => {
@@ -70,12 +71,23 @@ const CrudClub = (props: Props) => {
     navigate("/clubs");
   }
 
+  const { status: clubStatus, refetch: clubRefetch } = useQuery({
+    queryKey: [`club/${clubId}`],
+    queryFn: Auth?.getRequest,
+    enabled: !!clubId,
+    onSuccess: (res: IClub) => {
+      Object.entries(res).forEach(([key, value]) => {
+        setValue(key as keyof IClub, value);
+      });
+    },
+  });
+
   const onSubmitHandler = (data: IClub) => {
     setError("");
     mutate(
       {
-        entity: "clubs/",
-        method: "post",
+        entity: mode === "EDIT" ? `club/${mode === "EDIT" ? clubId : ""}` : `clubs/`,
+        method: mode === "EDIT" ? "put" : "post",
         data: {
           ...data,
           day_time: timeSpan,
@@ -128,6 +140,13 @@ const CrudClub = (props: Props) => {
     ],
     [classes, classesRefetch, classesStatus, setValue, teachers, teachersRefetch, teachersStatus, watch]
   );
+
+  if (mode === "EDIT" && clubStatus === "loading") {
+    return <Skeleton height={400} />;
+  }
+  if (mode === "EDIT" && clubStatus === "error") {
+    return <ErrorHandler onRefetch={clubRefetch} errorText="Error On Fetching Club Info" />;
+  }
 
   return (
     <>
